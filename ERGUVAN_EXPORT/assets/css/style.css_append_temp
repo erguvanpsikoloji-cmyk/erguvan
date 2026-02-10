@@ -1,0 +1,8 @@
+# CSS Güncellemeleri
+İlk olarak, `assets/css/style.css` dosyasına yeni `.aesthetic-image` sınıfını ve genel görsel iyileştirmelerini ekleyeceğim. Bu kurallar şunları içerecek:
+- Yumuşak köşe geçişleri (border-radius)
+- Hafif gölgelendirme (box-shadow)
+- Resimlerin taşmasını önleyen responsive ayarlar (max-width: 100%, height: auto)
+- aspect-ratio desteği ile CLS (Content Layout Shift) optimizasyonu
+
+(Not: Kullanıcı isteği üzerine büyüme/scale efekti eklenmeyecek.)

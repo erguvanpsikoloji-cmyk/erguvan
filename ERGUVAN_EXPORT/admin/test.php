@@ -1,0 +1,2 @@
+<?php
+die("PHP EXECUTION SUCCESSFUL");

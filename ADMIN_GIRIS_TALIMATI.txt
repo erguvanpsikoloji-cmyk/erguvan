@@ -1,0 +1,35 @@
+# SON ADIM - Admin Panele Giriş
+
+## ADIM 1: Şifre Sıfırlama
+
+Bu linke tıklayın:
+```
+https://www.erguvanpsikoloji.com/admin/login.php?reset_pass=yes
+```
+
+VEYA ekrandaki hata mesajındaki **"buraya tıklayın"** linkine tıklayın.
+
+## ADIM 2: Bilgileri Kaydedin
+
+Sayfa açılınca:
+- ✅ Kullanıcı adını göreceksiniz (muhtemelen "Erguvan")
+- ✅ Yeni şifre: **admin123**
+
+## ADIM 3: Giriş Yapın
+
+Login sayfasına dönün ve:
+- **Kullanıcı Adı:** Erguvan
+- **Şifre:** admin123
+
+ile giriş yapın.
+
+---
+
+## Alternatif: Force Login (Şifresiz)
+
+Eğer yine çalışmazsa:
+```
+https://www.erguvanpsikoloji.com/admin/login.php?force_login=yes
+```
+
+Bu link hiç şifre sormadan direkt içeri alır.

@@ -1,0 +1,58 @@
+---
+alwaysApply: true
+---
+// Mirza Kuralları - Cursor İçin Temel Kurallar Listesi
+
+// 1. Her zaman Türkçe cevap verilir.
+// 2. Her zaman Türkçe kod yazılır.
+// 3. Tüm projelerde link yapısı mutlaka SÜRÜM (version) temelli oluşturulmalıdır.
+//    Örnek: /v1/assets/style.css, /v2/assets/style.css şeklinde sürüm numarası URL'lerde görünür olmalıdır.
+// 4. Her deploy/işlemde versiyon numarası otomatik şekilde arttırılır. Böylece cache temizlenir, eski görünüm problemi oluşmaz.
+// 5. Her projede mutlaka merkezi bir URL yapı dosyası kullanılmalıdır. (config.php, config.js, .env veya benzeri)
+//    Projede sitenin temel URL’i bu dosyadan alınır.
+//    Örnek değerler:
+//       http://localhost/projeadi/
+//       https://erguvanpsikoloji.com/
+// 6. Tüm route, asset ve API çağrıları merkezi bu yapıdaki temel URL ve sürüm bilgisini okuyarak üretilir.
+
+
+// Örnek Türkçe PHP config (config.php):
+/*
+return [
+    'base_url' => 'https://erguvanpsikoloji.com/',
+    'version'  => 'v2'
+];
+*/
+
+// Kullanım:
+/*
+<link rel="stylesheet" href="<?= $config['base_url'].'/'.$config['version'].'/assets/style.css' ?>">
+*/
+
+// Örnek Türkçe JavaScript config (config.js):
+/*
+export const config = {
+    baseUrl: "https://erguvanpsikoloji.com/",
+    version: "v2"
+};
+*/
+
+// Kullanım:
+/*
+const styleUrl = `${config.baseUrl}${config.version}/assets/style.css`;
+*/
+
+// Tüm Türkçe dökümantasyon ve kod örneklerinde yukarıdaki yapı zorunludur.
+
+// 7. Her zaman modern bir arayüz (UI) kullanılmasına özellikle dikkat edilmelidir. Modern ve kullanıcı dostu bir deneyim standart kural olarak zorunludur.
+//    Tüm proje arayüzlerinde responsive, estetik ve erişilebilir tasarım prensipleri uygulanmalıdır.
+//    Gerekirse; Tailwind CSS, Bootstrap, Material UI gibi modern kütüphanelerden faydalanılabilir. Kendi stillerinizde bile modernlik/uygunluk dikkate alınmalıdır.
+//    Arayüzde kullanılan CSS/JS/komponentler yukarıdaki merkezi yapıdan (base URL + versiyon) çağrılmalıdır.
+//
+//    Örnek (Tailwind ile):
+//    <link href="<?= $config['base_url'].'/'.$config['version'].'/assets/tailwind.min.css' ?>" rel="stylesheet">
+//
+//    veya (Kendi CSS'iniz ile):
+//    <link rel="stylesheet" href="<?= $config['base_url'].'/'.$config['version'].'/assets/style.css' ?>">
+//
+//    Açıklama dökümanlarında ve kod örneklerinde UI'nın modern yapılması özellikle vurgulanmalıdır.

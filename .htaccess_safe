@@ -1,0 +1,19 @@
+# Basic Settings
+DirectoryIndex index.php index.html
+Options -Indexes
+
+# Simple text compression if available
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+</IfModule>
+
+# URL Rewrite for Blog (Minimal)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+    RewriteRule ^blog/([a-z0-9-]+)/?$ pages/blog-post.php?slug=$1 [L,QSA]
+</IfModule>

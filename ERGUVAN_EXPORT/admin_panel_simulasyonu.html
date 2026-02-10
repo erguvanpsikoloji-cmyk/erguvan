@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel TOC Simülasyonu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7f6;
+            padding: 40px;
+        }
+
+        .admin-form-mockup {
+            background: white;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: #1e293b;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #475569;
+        }
+
+        .fake-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            background: #f8fafc;
+        }
+
+        /* GERÇEK TOC BUILDER STİLLERİ */
+        .admin-toc-builder {
+            background-color: #fff8fb;
+            border: 1px solid #fbcfe8;
+            border-left: 12px solid #ec4899;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(236, 72, 153, 0.06);
+        }
+
+        .admin-toc-title {
+            color: #ec4899;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .admin-toc-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            border: 1px dashed #fbcfe8;
+        }
+
+        .admin-toc-item.level-h3 {
+            margin-left: 40px;
+            border-color: #cbd5e1;
+        }
+
+        .admin-toc-item input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+        }
+
+        .admin-toc-item select {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .remove-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .add-btn {
+            background: #ec4899;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-form-mockup">
+        <h1>Yeni Blog Yazısı Ekle (Panel Önizleme)</h1>
+
+        <span class="label">Başlık</span>
+        <div class="fake-input">Ayrılık Kaygısı Hakkında Her Şey</div>
+
+        <span class="label">Özet</span>
+        <div class="fake-input">Bu yazıda çocuklarda ve yetişkinlerde görülen ayrılık kaygısının nedenlerini ve çözüm
+            yollarını bulacaksınız...</div>
+
+        <!-- SİZE ÖZEL TOC BÖLÜMÜ -->
+        <span class="label">İçindekiler Bölümü (Admin Özel)</span>
+        <div class="admin-toc-builder">
+            <div class="admin-toc-title">
+                <span>İçindekiler Önizleme</span>
+                <small style="font-weight: normal; font-size: 12px; color: #64748b;">Görseldeki tasarımı admin
+                    panelinize getirdik</small>
+            </div>
+
+            <div id="container">
+                <div class="admin-toc-item">
+                    <select onchange="update(this)">
+                        <option value="h2">H2</option>
+                        <option value="h3">H3</option>
+                    </select>
+                    <input type="text" value="Ayrılık Kaygısı Nedir?">
+                    <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
+                </div>
+                <div class="admin-toc-item level-h3">
+                    <select onchange="update(this)">
+                        <option value="h2">H2</option>
+                        <option value="h3" selected>H3</option>
+                    </select>
+                    <input type="text" value="Belirtiler ve Tanı">
+                    <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
+                </div>
+            </div>
+
+            <button class="add-btn" onclick="add()">➕ Yeni Başlık Ekle</button>
+        </div>
+
+        <span class="label">İçerik Editörü</span>
+        <div class="fake-input" style="height: 200px;">Zengin metin editörü alanı...</div>
+    </div>
+
+    <script>
+        function add() {
+            const div = document.createElement('div');
+            div.className = 'admin-toc-item';
+            div.innerHTML = `
+            <select onchange="update(this)">
+                <option value="h2">H2</option>
+                <option value="h3">H3</option>
+            </select>
+            <input type="text" placeholder="Yeni başlık yazın...">
+            <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
+        `;
+            document.getElementById('container').appendChild(div);
+        }
+        function update(sel) {
+            sel.parentElement.className = 'admin-toc-item ' + (sel.value === 'h3' ? 'level-h3' : '');
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+=== 1. YAZI: AYRILIK KAYGISI ===
+
+BAŞLIK:
+Ayrılık Kaygısı Nedir? Belirtileri ve Tedavisi
+
+SLUG (URL Kısmı):
+ayrilik-kaygisi-nedir
+
+KATEGORİ:
+Çocuk Psikolojisi
+
+İÇERİK (Aşağıdaki HTML kodunu kopyalayıp editöre yapıştırın):
+------------------------------------------------------------
+<h2 id="belirtiler">Ayrılma Kaygısı Bozukluğu Belirtileri</h2>
+<p>Ayrılma kaygısı yaşayan çocuklarda hem duygusal hem de fiziksel belirtiler görülebilir. Bu belirtiler çocuğun günlük yaşamını, okul uyumunu ve sosyal ilişkilerini olumsuz etkileyebilir.</p>
+
+<p>En sık görülen belirtiler şunlardır:</p>
+<ul>
+    <li>Çocuğun bakım veren kişiden uzaklaştığında aşırı huzursuzluk hissetmesi</li>
+    <li>Kabuslar görmesi ve uyku sorunları yaşaması</li>
+    <li>Okula gitmek istememe veya okul reddi</li>
+    <li>Baş ağrısı, karın ağrısı gibi fiziksel şikayetler</li>
+    <li>Ayrılık anında ağlama, bağırma gibi yoğun tepkiler</li>
+    <li>Ebeveynin başına kötü bir şey geleceği endişesi</li>
+</ul>
+
+<h2 id="nedenleri">Ayrılık Kaygısı Bozukluğu Neden Olur?</h2>
+<p>Ayrılık kaygısının ortaya çıkmasında birden fazla etken rol oynayabilir. Çocuğun yaşadığı çevresel değişiklikler bu süreci tetikleyebilir.</p>
+
+<p>Başlıca nedenler:</p>
+<ul>
+    <li>Taşınma, okul değişikliği gibi yaşam değişiklikleri</li>
+    <li>Ebeveynlerin boşanması veya ayrılması</li>
+    <li>Aile içi çatışmalar ve stres</li>
+    <li>Travmatik yaşam olayları (hastalık, kayıp)</li>
+    <li>Aşırı koruyucu ebeveynlik tutumu</li>
+    <li>Genetik yatkınlık</li>
+</ul>
+
+<h2 id="tani-kriterleri">Ayrılık Anksiyetesi Bozukluğu Tanı Kriterleri</h2>
+<p>Ayrılık kaygısının klinik bir sorun olarak değerlendirilmesi için bazı tanı kriterlerinin karşılanması gerekir.</p>
+
+<p>DSM-5 tanı kriterlerine göre:</p>
+<ul>
+    <li>Belirtilerin en az 4 hafta sürmesi (çocuklarda)</li>
+    <li>Gelişim düzeyine uygun olmayan aşırı kaygı</li>
+    <li>Sosyal, akademik veya diğer önemli işlevsellik alanlarında bozulma</li>
+    <li>Başka bir ruhsal bozuklukla açıklanamayan belirtiler</li>
+</ul>
+
+<h2 id="tedavisi">Ayrılma Kaygısı Bozukluğu Tedavisi</h2>
+<p>Ayrılık kaygısı bozukluğunun tedavisinde çocuğun yaşına ve ihtiyaçlarına uygun terapi yöntemleri uygulanır. En etkili yaklaşımlardan biri oyun terapisidir.</p>
+
+<h3>Tedavi Yöntemleri:</h3>
+<ul>
+    <li><strong>Oyun Terapisi:</strong> Çocuğun duygularını oyun yoluyla ifade etmesini sağlar</li>
+    <li><strong>Bilişsel Davranışçı Terapi:</strong> Kaygı yaratan düşünceleri değiştirmeyi hedefler</li>
+    <li><strong>Ebeveyn Danışmanlığı:</strong> Ailenin sürece dahil edilmesi</li>
+    <li><strong>Aşamalı Maruz Bırakma:</strong> Çocuğun kademeli olarak ayrılık durumlarına alıştırılması</li>
+</ul>
+
+<p>Erken müdahale, çocuğun sağlıklı gelişimini desteklemek açısından çok önemlidir. Profesyonel destek almaktan çekinmeyin.</p>
+------------------------------------------------------------
+
+
+=== 2. YAZI: OYUN TERAPİSİ ===
+
+BAŞLIK:
+Oyun Terapisi Nedir? Çocukların Duygusal Dünyasına Açılan Kapı
+
+SLUG (URL Kısmı):
+oyun-terapisi-nedir
+
+KATEGORİ:
+Çocuk Psikolojisi
+
+İÇERİK (Aşağıdaki HTML kodunu kopyalayıp editöre yapıştırın):
+------------------------------------------------------------
+<h2>Oyun Terapisi Nedir?</h2>
+<p>Oyun terapisi, çocukların duygusal, davranışsal ve psikolojik yaşantılarını oyun aracılığıyla ifade etmelerini sağlayan, bilimsel temellere dayalı bir psikoterapi yöntemidir. Çocuklar yaşadıkları duyguları, korkuları, kaygıları ve içsel çatışmaları yetişkinler gibi sözcüklerle anlatamazlar. Onların dili oyundur.</p>
+
+<h3>Bu Yöntem Neden Gereklidir?</h3>
+<p>Çocukluk dönemi, bireyin kişilik gelişiminin, duygusal düzenleme becerilerinin ve sosyal ilişkilerinin temellerinin atıldığı en kritik yaşam evrelerinden biridir. Bu dönemde yaşanan travmalar, kayıplar, aile içi çatışmalar, boşanma, taşınma, okul değişikliği, hastalık veya ihmal gibi stresli yaşam olayları çocuğun psikolojik dünyasında derin izler bırakabilir.</p>
+
+<p>Bu desteğin gerekli olmasının başlıca nedenleri:</p>
+<ul>
+    <li>Çocuklar karmaşık duygularını kelimelerle ifade etmekte zorlanır</li>
+    <li>Bastırılan duygular davranış problemleri olarak dışa vurulabilir</li>
+    <li>Travmatik yaşantılar oyun yoluyla güvenli biçimde işlenebilir</li>
+    <li>Erken dönemde alınan psikolojik destek, ilerleyen yaşlarda oluşabilecek ruhsal sorunları önleyebilir</li>
+    <li>Çocuğun duygusal farkındalığı ve kendini ifade etme becerisi gelişir</li>
+</ul>
+
+<h3>Terapi Türleri</h3>
+<ul>
+    <li><strong>Yönlendirilmemiş (Çocuk Merkezli) Terapi:</strong> Bu ekolde çocuk sürecin lideridir. Terapist çocuğun seçimlerine saygı duyar ve süreci takip eder.</li>
+    <li><strong>Yönlendirilmiş Oyun Terapisi:</strong> Terapistin daha aktif olduğu bu yöntemde, belirli hedeflere yönelik yapılandırılmış kurgular kullanılır.</li>
+    <li><strong>Filial Yaklaşım:</strong> Ebeveynlerin sürece aktif olarak dahil edildiği bir modeldir.</li>
+    <li><strong>Kum Tepsisi Terapisi:</strong> Çocuğun iç dünyasını semboller aracılığıyla yansıtmasına olanak tanır.</li>
+</ul>
+
+<h3>Kullanılan Materyaller</h3>
+<p>Terapi odasında kullanılan materyaller:</p>
+<ul>
+    <li>Aile figürleri, hayvan oyuncakları</li>
+    <li>Bebekler ve ev setleri</li>
+    <li>Arabalar ve askerler</li>
+    <li>Resim, boyama materyalleri, hamur ve kil</li>
+    <li>Kuklalar</li>
+</ul>
+
+<h3>Süreç Nasıl İlerler?</h3>
+<p>Oyun terapisi süreci genellikle değerlendirme, terapi ve sonlandırma aşamalarından oluşur. İlk görüşmelerde ebeveynlerle detaylı bir öykü alınır. Ardından çocukla düzenli seanslar başlar. Seanslar genellikle haftada bir yapılır ve yaklaşık 45-50 dakika sürer.</p>
+
+<h3>Sık Sorulan Sorular</h3>
+<p><strong>Kaç yaş için uygundur?</strong><br>
+Genellikle 2-12 yaş arası çocuklar için uygundur; gelişimsel düzeye göre ergenlik döneminde de uygulanabilir.</p>
+
+<p><strong>Seans sayısı neye göre belirlenir?</strong><br>
+Çocuğun yaşadığı zorlukların türüne, süresine ve bireysel ihtiyaçlarına göre değişir.</p>
+
+<p><strong>Aile sürece dahil edilir mi?</strong><br>
+Evet. Ebeveyn görüşmeleri terapinin önemli bir parçasıdır.</p>
+------------------------------------------------------------

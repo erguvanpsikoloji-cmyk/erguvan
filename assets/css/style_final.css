@@ -1,0 +1,271 @@
+﻿/* New Erguvan Brand Design System - Exact Replica of Modern Template Structure */
+:root {
+    --primary-color: #E85C9E;
+    --secondary-color: #D8CFF0;
+    --accent-color: #B8A1D9;
+    --bg-krem: #FFF7FA;
+    --bg-gri: #f7fafc;
+    --text-dark: #2E2A4F;
+    --text-light: #5D5A88;
+    --white: #ffffff;
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+    --transition: all 0.3s ease;
+    --radius-lg: 32px;
+    --radius-md: 20px;
+    --shadow-soft: 0 10px 40px rgba(46, 42, 79, 0.08);
+    --shadow-hover: 0 20px 60px rgba(46, 42, 79, 0.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--white);
+    overflow-x: hidden;
+    padding-top: 100px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.main-logo {
+    height: 80px;
+    width: auto;
+    mix-blend-mode: multiply;
+    margin-left: -20px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 0;
+    transition: var(--transition);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary-color);
+}
+
+.btn-premium {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    color: white !important;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    margin-left: 20px !important;
+}
+
+/* Expert Cards - BİREBİR EŞLEME */
+.expert-profile-container {
+    padding: 50px 0;
+}
+
+.expert-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    display: flex;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 70px;
+    border: 1px solid #f1f5f9;
+}
+
+.expert-image-side {
+    flex: 0 0 420px;
+    position: relative;
+}
+
+.expert-image-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.expert-content-side {
+    padding: 60px;
+    flex: 1;
+}
+
+.expert-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+    letter-spacing: -0.5px;
+}
+
+.expert-header .title {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.expert-section-title {
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    font-weight: 700;
+}
+
+.expert-approach {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 10px;
+}
+
+.expert-approach h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.expert-approach p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.7;
+}
+
+.expertise-list,
+.education-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 30px;
+}
+
+.expertise-list li,
+.education-list li {
+    font-size: 1rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+}
+
+/* Checkmark Icon - Custom Style Like Screenshot */
+.expertise-list li i {
+    color: #fff;
+    background: var(--primary-color);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    margin-right: 12px;
+}
+
+/* Education Icons */
+.education-list li i {
+    color: var(--primary-color);
+    margin-right: 12px;
+    font-size: 1.2rem;
+    width: 24px;
+}
+
+/* Office & Other */
+.office {
+    padding: 100px 0;
+    background-color: var(--bg-gri);
+}
+
+.office-row {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    margin-bottom: 80px;
+}
+
+.office-row:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.office-img img {
+    width: 100%;
+    border-radius: 30px;
+    box-shadow: var(--shadow-soft);
+}
+
+.office-text h3 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 992px) {
+    .expert-card {
+        flex-direction: column;
+    }
+
+    .expert-image-side {
+        flex: 0 0 400px;
+    }
+
+    .expert-content-side {
+        padding: 40px 30px;
+    }
+
+    .expert-approach {
+        grid-template-columns: 1fr;
+    }
+
+    .expertise-list,
+    .education-list {
+        grid-template-columns: 1fr;
+    }
+}
+.expertise-list li i { background: #E85C9E !important; color: #fff !important; width: 22px !important; height: 22px !important; border-radius: 50% !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; margin-right: 12px !important; font-size: 0.7rem !important; border: none !important; }
+.expertise-list li i::before { content: '\f00c' !important; font-family: 'Font Awesome 6 Free' !important; font-weight: 900 !important; }
+.expert-card { box-shadow: 0 15px 50px rgba(46, 42, 79, 0.1) !important; border: 1px solid #f0f0f0 !important; }
+
