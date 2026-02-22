@@ -160,14 +160,14 @@ if (!empty($seo_data['og_description'])) {
       "image": "<?php echo htmlspecialchars($page_image); ?>",
       "@id": "<?php echo $site_url; ?>",
       "url": "<?php echo $site_url; ?>",
-      "telephone": "+905000000000",
+      "telephone": "+905511765285",
       "priceRange": "₺₺",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "İskenderpaşa Mah. (Örnek Adres)",
+        "streetAddress": "Şehremini, Millet Cd. 34098 Fatih/İstanbul",
         "addressLocality": "Fatih",
         "addressRegion": "İstanbul",
-        "postalCode": "34080",
+        "postalCode": "34098",
         "addressCountry": "TR"
       },
       "geo": {
@@ -413,22 +413,27 @@ if (!empty($seo_data['og_description'])) {
         .logo-text-group {
             display: flex;
             flex-direction: column;
-            line-height: 1.2;
+            line-height: 1;
+            margin-left: 0.2rem;
         }
 
         .logo-text {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-family: var(--font-heading);
             color: var(--primary);
-            font-weight: 700;
+            font-weight: 400;
             margin: 0;
+            letter-spacing: -0.5px;
         }
 
         .logo-subtitle {
-            font-size: 0.8rem;
-            color: var(--text-medium);
-            font-weight: 500;
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
             font-family: var(--font-body);
+            letter-spacing: 0.3px;
+            opacity: 0.85;
+            margin-top: 2px;
         }
 
         .nav-menu {
@@ -551,8 +556,17 @@ if (!empty($seo_data['og_description'])) {
             }
 
             .logo-text-group {
-                display: none;
-                /* Hide text on small mobile for space */
+                display: flex;
+                margin-left: 0.5rem;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.55rem;
+                letter-spacing: 0;
             }
 
             .nav-toggle {
@@ -667,8 +681,12 @@ if (!empty($seo_data['og_description'])) {
         <div class="container">
             <nav class="nav">
                 <a href="<?php echo url(); ?>" class="logo" aria-label="Erguvan Psikoloji Ana Sayfa">
-                    <img src="<?php echo asset_url('images/logo.webp'); ?>" alt="Erguvan Psikoloji" class="logo-image"
-                        style="height: 70px; width: auto;">
+                    <img src="<?php echo asset_url('images/logo_icon.png'); ?>" alt="Erguvan Psikoloji"
+                        class="logo-image" style="height: 60px; width: auto;">
+                    <div class="logo-text-group">
+                        <span class="logo-text">Erguvan Psikoloji</span>
+                        <span class="logo-subtitle">Uzman Klinik Psikolog Desteği</span>
+                    </div>
                 </a>
                 <div class="nav-menu" id="navMenu">
                     <a href="<?php echo url(); ?>" class="nav-link <?php echo $page == 'home' ? 'active' : ''; ?>">Ana

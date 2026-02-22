@@ -23,8 +23,7 @@
                         </div>
                         <div>
                             <h4 class="font-heading" style="margin-bottom: 0.5rem;">Adres</h4>
-                            <p style="color: var(--text-muted);">Şehremini, Millet Cd. Aydın apt No:131 Daire 4 34098
-                                Fatih/İstanbul</p>
+                            <p style="color: var(--text-muted);">Şehremini, Millet Cd. 34098 Fatih/İstanbul</p>
                         </div>
                     </div>
 

@@ -31,18 +31,23 @@ if (!$post) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
-        $error = 'Geçersiz istek!';
-    } else {
+    try {
+        if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
+            throw new Exception('Geçersiz istek! CSRF token doğrulanamadı.');
+        }
+
         $title = trim($_POST['title'] ?? '');
         $slug = trim($_POST['slug'] ?? '');
         $excerpt = trim($_POST['excerpt'] ?? '');
         $content = trim($_POST['content'] ?? '');
         $category = trim($_POST['category'] ?? '');
-        $reading_time = trim($_POST['reading_time'] ?? '5 dk');
+        $reading_time = ''; // Okuma süresi kaldırıldı
         $keywords = trim($_POST['keywords'] ?? '');
         $image_alt = trim($_POST['image_alt'] ?? '');
         $instagram_share = isset($_POST['instagram_share']) ? 1 : 0;
+        $meta_title = trim($_POST['meta_title'] ?? '');
+        $meta_description = trim($_POST['meta_description'] ?? '');
+        $tags = trim($_POST['tags'] ?? '');
         $toc_data = $_POST['toc_data'] ?? '';
         $faq_data = $_POST['faq_data'] ?? '';
 
@@ -54,55 +59,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($uploadResult['success']) {
                 $image = $uploadResult['url'];
             } else {
-                $error = $uploadResult['message'];
+                throw new Exception('Görsel yükleme hatası: ' . $uploadResult['message']);
             }
         }
 
-        if (!$error) {
-            if ($title && $slug && $excerpt && $content && $image && $category) {
-                try {
-                    $stmt = $db->prepare("UPDATE blog_posts SET 
-                                       title = :title, 
-                                       slug = :slug, 
-                                       excerpt = :excerpt, 
-                                       toc_data = :toc_data,
-                                       faq_data = :faq_data,
-                                       content = :content, 
-                                       image = :image, 
-                                       image_alt = :image_alt,
-                                       category = :category, 
-                                       reading_time = :reading_time,
-                                       keywords = :keywords,
-                                       instagram_share = :instagram_share,
-                                       updated_at = NOW()
-                                       WHERE id = :id");
-                    $stmt->execute([
-                        ':title' => $title,
-                        ':slug' => $slug,
-                        ':excerpt' => $excerpt,
-                        ':toc_data' => $toc_data,
-                        ':faq_data' => $faq_data,
-                        ':content' => $content,
-                        ':image' => $image,
-                        ':image_alt' => $image_alt,
-                        ':category' => $category,
-                        ':reading_time' => $reading_time,
-                        ':keywords' => $keywords,
-                        ':instagram_share' => $instagram_share,
-                        ':id' => $id
-                    ]);
-                    $success = true;
-                    // Güncel veriyi tekrar çekelim
-                    $stmt = $db->prepare("SELECT * FROM blog_posts WHERE id = ?");
-                    $stmt->execute([$id]);
-                    $post = $stmt->fetch();
-                } catch (PDOException $e) {
-                    $error = 'Hata: ' . $e->getMessage();
-                }
-            } else {
-                $error = 'Lütfen tüm yıldızlı (*) alanları doldurun!';
-            }
+        if (empty($title) || empty($slug) || empty($excerpt) || empty($content) || empty($image) || empty($category)) {
+            throw new Exception('Lütfen tüm yıldızlı (*) alanları doldurun!');
         }
+
+        // Auto-Canonical Logic
+        $canonical_url = trim($_POST['canonical_url'] ?? '');
+        if (empty($canonical_url) && !empty($slug)) {
+            $canonical_url = url('blog/' . $slug);
+        }
+
+        $stmt = $db->prepare("UPDATE blog_posts SET 
+                           title = :title, 
+                           slug = :slug, 
+                           excerpt = :excerpt, 
+                           toc_data = :toc_data,
+                           faq_data = :faq_data,
+                           content = :content, 
+                           image = :image, 
+                           image_alt = :image_alt,
+                           category = :category, 
+                           reading_time = :reading_time,
+                           keywords = :keywords,
+                           meta_title = :meta_title,
+                           meta_description = :meta_description,
+                           tags = :tags,
+                           instagram_share = :instagram_share,
+                           canonical_url = :canonical_url,
+                           og_title = :og_title,
+                           og_description = :og_description,
+                           schema_type = :schema_type,
+                           updated_at = NOW()
+                           WHERE id = :id");
+        $stmt->execute([
+            ':title' => $title,
+            ':slug' => $slug,
+            ':excerpt' => $excerpt,
+            ':toc_data' => $toc_data,
+            ':faq_data' => $faq_data,
+            ':content' => $content,
+            ':image' => $image,
+            ':image_alt' => $image_alt,
+            ':category' => $category,
+            ':reading_time' => $reading_time,
+            ':keywords' => $keywords,
+            ':meta_title' => $meta_title,
+            ':meta_description' => $meta_description,
+            ':tags' => $tags,
+            ':instagram_share' => $instagram_share,
+            ':canonical_url' => $canonical_url,
+            ':og_title' => $_POST['og_title'] ?? null,
+            ':og_description' => $_POST['og_description'] ?? null,
+            ':schema_type' => $_POST['schema_type'] ?? 'BlogPosting',
+            ':id' => $id
+        ]);
+
+        $success = true;
+        // Güncel veriyi tekrar çekelim
+        $stmt = $db->prepare("SELECT * FROM blog_posts WHERE id = ?");
+        $stmt->execute([$id]);
+        $post = $stmt->fetch();
+
+    } catch (\Throwable $e) {
+        $error = '<strong>Hata:</strong> ' . $e->getMessage() . '<br>';
+        $error .= '<small>Dosya: ' . $e->getFile() . ' (' . $e->getLine() . ')</small>';
+        error_log('Blog Edit Error: ' . $e->getMessage());
     }
 }
 
@@ -419,105 +444,174 @@ require_once __DIR__ . '/../includes/header.php';
                 </div>
             </div>
 
-            <!-- Akıllı Tarayıcılar -->
             <div class="admin-card">
-                <div class="card-title">🧠 Akıllı Tarayıcılar</div>
-                <div class="scanner-panel">
-                    <div class="scanner-box">
-                        <div class="scanner-header">
-                            <label style="margin:0;">İçindekiler</label>
-                            <button type="button" class="btn-magic" onclick="scanTOC()">🪄 Tara</button>
-                        </div>
-                        <div id="tocList"></div>
-                        <button type="button" class="btn-magic" style="width:100%;" onclick="addTocManually()">+ Manuel
-                            Ekle</button>
-                        <input type="hidden" name="toc_data" id="tocHidden"
-                            value='<?php echo htmlspecialchars($post['toc_data'] ?? ''); ?>'>
+                <div class="card-title">📍 İçindekiler Tarayıcı</div>
+                <div class="scanner-panel-v2">
+                    <label>Başlıklar (H2, H3) <button type="button" class="btn-magic" onclick="scanTOC()">🪄 Sayfayı
+                            Tara</button></label>
+                    <div id="tocList"
+                        style="margin-top: 10px; min-height: 50px; border: 1px dashed #ddd; padding: 10px; border-radius: 8px;">
                     </div>
-                    <div class="scanner-box">
-                        <div class="scanner-header">
-                            <label style="margin:0;">SSS / FAQ</label>
-                            <button type="button" class="btn-magic" onclick="scanFAQ()">🪄 Tara</button>
-                        </div>
-                        <div id="faqList"></div>
-                        <button type="button" class="btn-magic" style="width:100%;" onclick="addFaqManually()">+ Manuel
-                            Ekle</button>
-                        <input type="hidden" name="faq_data" id="faqHidden"
-                            value='<?php echo htmlspecialchars($post['faq_data'] ?? ''); ?>'>
+                    <input type="hidden" name="toc_data" id="tocHidden"
+                        value='<?php echo htmlspecialchars($post['toc_data'] ?? ''); ?>'>
+                    <button type="button" class="btn-magic" style="margin-top:10px; width:100%;" onclick="addTocRow()">+
+                        Manuel Başlık Ekle</button>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-title">❓ SSS / FAQ Tarayıcı</div>
+                <div class="scanner-panel-v2">
+                    <label>Sorular (?) <button type="button" class="btn-magic" onclick="scanFAQ()">🪄 Sayfayı
+                            Tara</button></label>
+                    <div id="faqList"
+                        style="margin-top: 10px; min-height: 50px; border: 1px dashed #ddd; padding: 10px; border-radius: 8px;">
                     </div>
+                    <input type="hidden" name="faq_data" id="faqHidden"
+                        value='<?php echo htmlspecialchars($post['faq_data'] ?? ''); ?>'>
+                    <button type="button" class="btn-magic" style="margin-top:10px; width:100%;" onclick="addFaqRow()">+
+                        Manuel Soru Ekle</button>
                 </div>
             </div>
         </div>
 
         <!-- SAĞ: SEO & Ayarlar -->
-        <div class="editor-sidebar">
-            <div class="admin-card">
-                <div class="card-title">🎯 SEO Analizi</div>
-                <div class="seo-list">
-                    <div class="seo-item">
-                        <div id="light-title" class="dot"></div>
-                        <span>Başlık Uzunluğu</span>
-                    </div>
-                    <div class="seo-item">
-                        <div id="light-meta" class="dot"></div>
-                        <span>Meta Açıklama</span>
-                    </div>
-                    <div class="seo-item">
-                        <div id="light-content" class="dot"></div>
-                        <span>Anahtar Kelime Yoğunluğu</span>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-top: 20px;">
-                    <label>Odak Anahtar Kelime</label>
-                    <input type="text" id="focus_keyword" name="keywords" class="form-control"
-                        value="<?php echo htmlspecialchars($post['keywords']); ?>">
+        <div class="admin-card">
+            <div class="card-title">🎯 SEO Analizi ve Puanı</div>
+
+            <!-- Score Gauge -->
+            <div style="display:flex; justify-content:center; margin-bottom:20px; position:relative;">
+                <svg viewBox="0 0 36 36" style="width:120px; height:120px; transform: rotate(-90deg);">
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
+                        stroke="#eee" stroke-width="3" />
+                    <path id="scoreCircle"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
+                        stroke="#ec4899" stroke-width="3" stroke-dasharray="0, 100"
+                        style="transition: stroke-dasharray 0.5s ease;" />
+                </svg>
+                <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); text-align:center;">
+                    <div id="seoScore" style="font-size:2rem; font-weight:800; color:#1e293b;">0</div>
+                    <div style="font-size:0.75rem; color:#64748b;">PUAN</div>
                 </div>
             </div>
 
-            <div class="admin-card">
-                <div class="card-title">🖼️ Görsel ve SEO</div>
-                <div class="form-group">
-                    <label>Kapak Görseli</label>
-                    <input type="file" name="image" class="form-control" accept="image/*" onchange="previewImg(this)">
-                    <input type="hidden" name="current_image" value="<?php echo htmlspecialchars($post['image']); ?>">
+            <div class="seo-list">
+                <div class="seo-item">
+                    <div id="check-title" class="dot"></div> <span>Başlık Uzunluğu (40-60)</span>
                 </div>
-                <div id="imgPreview" style="margin-bottom: 15px;">
-                    <img id="preview" src="<?php echo webp_url($post['image']); ?>"
-                        style="width:100%; border-radius: 12px; border: 1px solid var(--card-border);">
+                <div class="seo-item">
+                    <div id="check-slug" class="dot"></div> <span>SEO Dostu URL (Slug)</span>
                 </div>
-                <div class="form-group">
-                    <label>Görsel Alt Yazısı (SEO)</label>
-                    <input type="text" name="image_alt" class="form-control"
-                        value="<?php echo htmlspecialchars($post['image_alt'] ?? ''); ?>">
+                <div class="seo-item">
+                    <div id="check-desc" class="dot"></div> <span>Meta Açıklama (120-160)</span>
                 </div>
-            </div>
-
-            <div class="admin-card">
-                <div class="card-title">🚀 Yayın Bilgileri</div>
-                <div class="form-group">
-                    <label>Kategori *</label>
-                    <select name="category" class="form-control" required>
-                        <option value="">Seçin...</option>
-                        <?php foreach ($common_categories as $ca): ?>
-                            <option value="<?php echo $ca; ?>" <?php echo $post['category'] === $ca ? 'selected' : ''; ?>>
-                                <?php echo $ca; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                <div class="seo-item">
+                    <div id="check-content" class="dot"></div> <span>İçerik Uzunluğu (>300 kelime)</span>
                 </div>
-                <input type="hidden" name="reading_time" value="<?php echo htmlspecialchars($post['reading_time']); ?>">
-                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                    <input type="checkbox" name="instagram_share" id="insta" style="width:18px; height:18px;" <?php echo ($post['instagram_share'] ?? 0) ? 'checked' : ''; ?>>
-                    <label for="insta" style="margin:0; cursor:pointer;">📸 Instagram Paneline Düşsün</label>
+                <div class="seo-item">
+                    <div id="check-keyword" class="dot"></div> <span>Anahtar Kelime Kullanımı</span>
+                </div>
+                <div class="seo-item">
+                    <div id="check-subheadings" class="dot"></div> <span>H2/H3 Başlık Kullanımı</span>
+                </div>
+                <div class="seo-item">
+                    <div id="check-image" class="dot"></div> <span>Kapak Görseli & Alt Yazısı</span>
                 </div>
             </div>
 
-            <div class="admin-card">
-                <div class="card-title">👤 Yazar</div>
-                <button type="button" class="btn btn-secondary" style="width:100%; justify-content:center;"
-                    onclick="fillSena()">🪄 Sena Hanım Notu Ekle</button>
+            <div class="form-group" style="margin-top: 20px;">
+                <label>Odak Anahtar Kelime</label>
+                <input type="text" id="focus_keyword" name="keywords" class="form-control"
+                    value="<?php echo htmlspecialchars($post['keywords']); ?>">
             </div>
         </div>
+    </div>
+
+    <div class="admin-card">
+        <div class="card-title">🔍 Arama Motoru (SERP) Görünümü</div>
+        <div class="form-group">
+            <label>SEO Başlığı (Meta Title)</label>
+            <input type="text" id="meta_title" name="meta_title" class="form-control" maxlength="60"
+                value="<?php echo htmlspecialchars($post['meta_title'] ?? ''); ?>"
+                placeholder="Boş bırakılırsa yazı başlığı kullanılır">
+            <div style="display:flex; justify-content:space-between; margin-top:5px;">
+                <small style="color:#666">Google'da görünecek mavi başlık.</small>
+                <small><span id="metaTitleCount">0</span>/60</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>SEO Açıklaması (Meta Description)</label>
+            <textarea id="meta_description" name="meta_description" class="form-control" rows="3" maxlength="160"
+                placeholder="Boş bırakılırsa özet kullanılır"><?php echo htmlspecialchars($post['meta_description'] ?? ''); ?></textarea>
+            <div style="display:flex; justify-content:space-between; margin-top:5px;">
+                <small style="color:#666">Google'da başlığın altında çıkan gri yazı.</small>
+                <small><span id="metaDescCount">0</span>/160</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <div class="card-title">🖼️ Görsel ve SEO</div>
+        <div class="form-group">
+            <label>Kapak Görseli</label>
+            <input type="file" name="image" class="form-control" accept="image/*" onchange="previewImg(this)">
+            <input type="hidden" name="current_image" value="<?php echo htmlspecialchars($post['image']); ?>">
+        </div>
+        <div id="imgPreview" style="margin-bottom: 15px;">
+            <img id="preview" src="<?php echo webp_url($post['image']); ?>"
+                style="width:100%; border-radius: 12px; border: 1px solid var(--card-border);">
+        </div>
+        <div class="form-group">
+            <label>Görsel Alt Yazısı (SEO)</label>
+            <input type="text" name="image_alt" class="form-control"
+                value="<?php echo htmlspecialchars($post['image_alt'] ?? ''); ?>">
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <div class="card-title">🏷️ Etiketler & Ayarlar</div>
+        <div class="form-group">
+            <label>Kategori *</label>
+            <select name="category" class="form-control" required>
+                <option value="">Seçin...</option>
+                <?php foreach ($common_categories as $ca): ?>
+                    <option value="<?php echo $ca; ?>" <?php echo $post['category'] === $ca ? 'selected' : ''; ?>>
+                        <?php echo $ca; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Etiketler (Tags)</label>
+            <input type="text" name="tags" class="form-control"
+                value="<?php echo htmlspecialchars($post['tags'] ?? ''); ?>"
+                placeholder="Örn: depresyon, anksiyete, terapi (Virgülle ayırın)">
+            <small style="color:#666">Her etiket için otomatik sayfa oluşturulur.</small>
+        </div>
+        <!-- Okuma süresi input kaldırıldı -->
+        <input type="hidden" name="reading_time" value="<?php echo htmlspecialchars($post['reading_time']); ?>">
+        <div class="form-group">
+            <label style="cursor:pointer;"><input type="checkbox" name="instagram_share" value="1" <?php echo ($post['instagram_share'] ?? 0) ? 'checked' : ''; ?>> 📸 Instagram
+                Paneline Düşsün</label>
+        </div>
+        <div class="form-group" style="margin-top:15px; border-top:1px solid #eee; padding-top:10px;">
+            <label>Canonical URL (İsteğe Bağlı)</label>
+            <input type="url" name="canonical_url" value="<?php echo htmlspecialchars($post['canonical_url'] ?? ''); ?>"
+                class="form-control" placeholder="https://...">
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <div class="card-title">👤 Yazar Notu Ekle</div>
+        <div style="display:grid; gap:10px;">
+            <button type="button" class="btn btn-secondary" style="width:100%; justify-content:center;"
+                onclick="fillSena()">👩‍⚕️ Uzm. Psk. Sena Ceren</button>
+            <button type="button" class="btn btn-secondary"
+                style="width:100%; justify-content:center; background:#3b82f6; color:white;" onclick="fillSedat()">👨‍⚕️
+                Uzm. Psk. Sedat Parmaksız</button>
+        </div>
+    </div>
+    </div>
     </div>
 
     <!-- Sticky Footer -->
@@ -539,12 +633,45 @@ require_once __DIR__ . '/../includes/header.php';
 
         // Load existing data for scanners
         loadScanners();
-        runSEO();
 
-        document.getElementById('title').oninput = runSEO;
-        document.getElementById('excerpt').oninput = runSEO;
-        document.getElementById('focus_keyword').oninput = runSEO;
+        // Counter Events and SEO initialization
+        const metaTitleEl = document.getElementById('meta_title');
+        const metaDescEl = document.getElementById('meta_description');
+
+        if (metaTitleEl) {
+            metaTitleEl.addEventListener('input', function () {
+                const counter = document.getElementById('metaTitleCount');
+                if (counter) counter.innerText = this.value.length;
+                runSEO();
+            });
+            const initialCounter = document.getElementById('metaTitleCount');
+            if (initialCounter) initialCounter.innerText = metaTitleEl.value.length;
+        }
+
+        if (metaDescEl) {
+            metaDescEl.addEventListener('input', function () {
+                const counter = document.getElementById('metaDescCount');
+                if (counter) counter.innerText = this.value.length;
+                runSEO();
+            });
+            const initialCounter = document.getElementById('metaDescCount');
+            if (initialCounter) initialCounter.innerText = metaDescEl.value.length;
+        }
+
+        const titleEl = document.getElementById('title');
+        const excerptEl = document.getElementById('excerpt');
+        const keywordEl = document.getElementById('focus_keyword');
+        const slugEl = document.getElementById('slug');
+
+        if (titleEl) titleEl.oninput = runSEO;
+        if (excerptEl) excerptEl.oninput = runSEO;
+        if (keywordEl) keywordEl.oninput = runSEO;
+        if (slugEl) slugEl.oninput = runSEO;
+
         quill.on('text-change', runSEO);
+
+        // Final SEO score run
+        setTimeout(runSEO, 500);
     });
 
     function generateSlug() {
@@ -557,46 +684,100 @@ require_once __DIR__ . '/../includes/header.php';
     }
 
     function runSEO() {
-        const t = document.getElementById('title').value;
-        const e = document.getElementById('excerpt').value;
-        const k = document.getElementById('focus_keyword').value.toLowerCase();
-        const c = quill.root.innerText.toLowerCase();
+        if (!quill) return;
+        const t = document.getElementById('title') ? document.getElementById('title').value.trim() : '';
+        const e = document.getElementById('excerpt') ? document.getElementById('excerpt').value.trim() : '';
+        const k = document.getElementById('focus_keyword') ? document.getElementById('focus_keyword').value.toLowerCase().trim() : '';
+        const s = document.getElementById('slug') ? document.getElementById('slug').value.trim() : '';
+        const mt = document.getElementById('meta_title') ? document.getElementById('meta_title').value.trim() : '';
+        const md = document.getElementById('meta_description') ? document.getElementById('meta_description').value.trim() : '';
 
-        document.getElementById('charCount').innerText = 160 - e.length;
+        const contentText = quill.root.innerText;
+        const wordCount = contentText.split(/\s+/).filter(w => w.length > 0).length;
 
-        const lt = document.getElementById('light-title');
-        if (t.length >= 40 && t.length <= 65) lt.className = 'dot green';
-        else if (t.length > 0) lt.className = 'dot orange';
-        else lt.className = 'dot red';
+        let score = 0;
+        const setStatus = (id, ok) => {
+            const el = document.getElementById(id);
+            if (el) el.className = 'dot ' + (ok ? 'green' : 'red');
+        };
 
-        const lm = document.getElementById('light-meta');
-        if (e.length >= 100 && e.length <= 160) lm.className = 'dot green';
-        else if (e.length > 0) lm.className = 'dot orange';
-        else lm.className = 'dot red';
+        // 1. Title (40-60 chars) [15 Puan]
+        const titleToTest = mt || t;
+        if (titleToTest.length >= 40 && titleToTest.length <= 60) { score += 15; setStatus('check-title', true); }
+        else { setStatus('check-title', false); }
 
-        const lk = document.getElementById('light-content');
-        if (k && (t.toLowerCase().includes(k) || c.includes(k))) lk.className = 'dot green';
-        else if (k) lk.className = 'dot red';
-        else lk.className = 'dot';
+        // 2. Slug [10 Puan]
+        if (s.length > 0 && !s.includes(' ')) { score += 10; setStatus('check-slug', true); }
+        else setStatus('check-slug', false);
+
+        // 3. Meta Description (120-160 chars) [15 Puan]
+        const descToTest = md || e;
+        if (descToTest.length >= 120 && descToTest.length <= 160) { score += 15; setStatus('check-desc', true); }
+        else setStatus('check-desc', false);
+
+        // 4. Content Length (>300 words) [20 Puan]
+        if (wordCount >= 300) { score += 20; setStatus('check-content', true); }
+        else setStatus('check-content', false);
+
+        // 5. Keyword Usage [20 Puan]
+        let kScore = 0;
+        if (k.length > 0) {
+            if (t.toLowerCase().includes(k)) kScore += 5;
+            if (s.includes(k.replace(/ /g, '-'))) kScore += 5;
+            if (contentText.toLowerCase().includes(k)) kScore += 5;
+            if (contentText.substring(0, 500).toLowerCase().includes(k)) kScore += 5;
+        }
+        if (kScore >= 15) setStatus('check-keyword', true);
+        else setStatus('check-keyword', false);
+        score += kScore;
+
+        // 6. Subheadings (H2, H3) [10 Puan]
+        const hTags = quill.root.querySelectorAll('h2, h3').length;
+        if (hTags > 0) { score += 10; setStatus('check-subheadings', true); }
+        else setStatus('check-subheadings', false);
+
+        // 7. Image & Alt [10 Puan]
+        const previewEl = document.getElementById('preview');
+        const hasImg = previewEl && previewEl.src.length > 50;
+        const imgAltEl = document.querySelector('input[name="image_alt"]');
+        const imgAlt = imgAltEl ? imgAltEl.value.trim() : '';
+        if (hasImg && imgAlt) { score += 10; setStatus('check-image', true); }
+        else setStatus('check-image', false);
+
+        updateGauge(score);
+    }
+
+    function updateGauge(score) {
+        const circle = document.getElementById('scoreCircle');
+        const text = document.getElementById('seoScore');
+        if (!circle || !text) return;
+
+        const dashArray = `${score}, 100`;
+        circle.style.strokeDasharray = dashArray;
+        text.innerText = score;
+
+        let color = '#ef4444'; // Red
+        if (score >= 50) color = '#f59e0b'; // Orange
+        if (score >= 80) color = '#10b981'; // Green
+        circle.style.stroke = color;
     }
 
     function scanTOC() {
         const container = document.getElementById('tocList');
         container.innerHTML = '';
         quill.root.querySelectorAll('h2, h3').forEach(h => {
-            addTocRow(h.innerText, h.tagName.toLowerCase());
+            addTocRow(h.innerText.trim(), h.tagName.toLowerCase());
         });
     }
 
     function addTocRow(text = '', level = 'h2') {
         const div = document.createElement('div');
         div.className = 'toc-item';
+        div.style = "display:flex; gap:5px; margin-bottom:5px;";
         div.innerHTML = `
-            <div style="display:flex; gap:10px;">
-                <select onchange="saveTOC()" class="form-control" style="width:80px; padding:5px;"><option value="h2" ${level == 'h2' ? 'selected' : ''}>H2</option><option value="h3" ${level == 'h3' ? 'selected' : ''}>H3</option></select>
-                <input type="text" value="${text}" oninput="saveTOC()" class="form-control" style="padding:5px;">
-                <button type="button" onclick="this.parentElement.parentElement.remove();saveTOC();" style="color:#ef4444; border:0; background:none; font-size:1.2rem; cursor:pointer;">✕</button>
-            </div>`;
+            <select onchange="saveTOC()" class="form-control" style="width:70px;"><option value="h2" ${level == 'h2' ? 'selected' : ''}>H2</option><option value="h3" ${level == 'h3' ? 'selected' : ''}>H3</option></select>
+            <input type="text" value="${text}" oninput="saveTOC()" class="form-control" style="flex:1;">
+            <button type="button" onclick="this.parentElement.remove();saveTOC();" style="color:#ef4444; border:0; background:none; cursor:pointer;">✕</button>`;
         document.getElementById('tocList').appendChild(div);
         saveTOC();
     }
@@ -605,17 +786,18 @@ require_once __DIR__ . '/../includes/header.php';
         const items = [];
         document.querySelectorAll('.toc-item').forEach(row => {
             const level = row.querySelector('select').value;
-            const text = row.querySelector('input').value;
+            const text = row.querySelector('input').value.trim();
             if (text) items.push({ level, text });
         });
         document.getElementById('tocHidden').value = JSON.stringify(items);
     }
 
     function scanFAQ() {
+        if (!quill) return;
         const container = document.getElementById('faqList');
         const text = quill.root.innerText;
-        const matches = text.match(/[^.!?]+\?/g);
-        if (!matches) return alert('İçerikte soru işareti bulunamadı.');
+        const matches = text.match(/[^.!?\n]{5,}\?/g);
+        if (!matches) return alert('İçerikte soru (?) bulunamadı.');
         container.innerHTML = '';
         matches.forEach(q => addFaqRow(q.trim()));
     }
@@ -623,10 +805,11 @@ require_once __DIR__ . '/../includes/header.php';
     function addFaqRow(q = '', a = '') {
         const div = document.createElement('div');
         div.className = 'faq-item';
+        div.style = "margin-bottom:10px; padding:10px; background:#f8fafc; border-radius:8px; position:relative;";
         div.innerHTML = `
-            <input type="text" value="${q}" oninput="saveFAQ()" class="form-control mb-1" style="padding:5px;" placeholder="Soru">
-            <textarea oninput="saveFAQ()" class="form-control" style="padding:5px; height:60px;" placeholder="Cevap">${a}</textarea>
-            <button type="button" onclick="this.parentElement.remove();saveFAQ();" style="position:absolute; right:12px; top:8px; color:#ef4444; border:0; background:none; cursor:pointer;">✕</button>`;
+            <input type="text" value="${q}" oninput="saveFAQ()" class="form-control mb-1" placeholder="Soru">
+            <textarea oninput="saveFAQ()" class="form-control" style="height:60px;" placeholder="Cevap">${a}</textarea>
+            <button type="button" onclick="this.parentElement.remove();saveFAQ();" style="position:absolute; right:5px; top:5px; color:#ef4444; border:0; background:none; cursor:pointer;">✕</button>`;
         document.getElementById('faqList').appendChild(div);
         saveFAQ();
     }
@@ -634,8 +817,8 @@ require_once __DIR__ . '/../includes/header.php';
     function saveFAQ() {
         const items = [];
         document.querySelectorAll('.faq-item').forEach(row => {
-            const q = row.querySelector('input').value;
-            const a = row.querySelector('textarea').value;
+            const q = row.querySelector('input').value.trim();
+            const a = row.querySelector('textarea').value.trim();
             if (q) items.push({ q, a });
         });
         document.getElementById('faqHidden').value = JSON.stringify(items);
@@ -643,11 +826,17 @@ require_once __DIR__ . '/../includes/header.php';
 
     function loadScanners() {
         try {
-            const toc = JSON.parse(document.getElementById('tocHidden').value || '[]');
-            toc.forEach(i => addTocRow(i.text, i.level));
-            const faq = JSON.parse(document.getElementById('faqHidden').value || '[]');
-            faq.forEach(i => addFaqRow(i.q, i.a));
-        } catch (e) { }
+            const tocVal = document.getElementById('tocHidden').value;
+            const faqVal = document.getElementById('faqHidden').value;
+            if (tocVal) {
+                const toc = JSON.parse(tocVal);
+                toc.forEach(i => addTocRow(i.text, i.level));
+            }
+            if (faqVal) {
+                const faq = JSON.parse(faqVal);
+                faq.forEach(i => addFaqRow(i.q, i.a));
+            }
+        } catch (e) { console.error('Load Scanners Error:', e); }
     }
 
     function insertBox(type) {
@@ -667,6 +856,7 @@ require_once __DIR__ . '/../includes/header.php';
             const r = new FileReader();
             r.onload = e => {
                 document.getElementById('preview').src = e.target.result;
+                runSEO();
             }
             r.readAsDataURL(input.files[0]);
         }
@@ -680,6 +870,14 @@ require_once __DIR__ . '/../includes/header.php';
         quill.clipboard.dangerouslyPasteHTML(quill.getLength(), html);
     }
 
+    function fillSedat() {
+        const html = `<div style="margin-top:25px; padding:20px; background:#eff6ff; border-radius:15px; border:1px solid #bfdbfe;">
+            <strong style="color:#2563eb; display:block; margin-bottom:10px;">✍️ Uzm. Psk. Sedat Parmaksız Notu:</strong>
+            <p style="margin:0;">Bu içerik bilgilendirme amaçlıdır ve profesyonel tıbbi tavsiye yerine geçmez. Detaylı bilgi ve randevu için iletişime geçebilirsiniz.</p>
+        </div><p><br></p>`;
+        quill.clipboard.dangerouslyPasteHTML(quill.getLength(), html);
+    }
+
     document.getElementById('blogForm').onsubmit = function () {
         document.getElementById('contentHidden').value = quill.root.innerHTML;
         return true;
@@ -687,12 +885,12 @@ require_once __DIR__ . '/../includes/header.php';
 
     function livePreview() {
         const d = {
-            title: document.getElementById('title').value,
-            content: quill.root.innerHTML,
-            excerpt: document.getElementById('excerpt').value,
-            category: document.querySelector('select[name="category"]').value,
-            toc: document.getElementById('tocHidden').value,
-            faq: document.getElementById('faqHidden').value
+            title: document.getElementById('title') ? document.getElementById('title').value : '',
+            content: quill ? quill.root.innerHTML : '',
+            excerpt: document.getElementById('excerpt') ? document.getElementById('excerpt').value : '',
+            category: document.querySelector('select[name="category"]') ? document.querySelector('select[name="category"]').value : '',
+            toc: document.getElementById('tocHidden') ? document.getElementById('tocHidden').value : '',
+            faq: document.getElementById('faqHidden') ? document.getElementById('faqHidden').value : ''
         };
         localStorage.setItem('preview_data', JSON.stringify(d));
         window.open('blog-preview.php', '_blank');

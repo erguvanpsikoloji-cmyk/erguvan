@@ -38,10 +38,11 @@
             <div class="footer-contact">
                 <h4>İletişim</h4>
                 <ul>
-                    <li><i class="fas fa-phone-alt"></i> <a href="tel:+905511765285">0551 176 52 85</a></li>
+                    <li><i class="fas fa-phone-alt"></i> <a href="tel:+905511765285">05511765285</a></li>
                     <li><i class="fas fa-envelope"></i> <a
                             href="mailto:info@erguvanpsikoloji.com">info@erguvanpsikoloji.com</a></li>
-                    <li><i class="fas fa-map-marker-alt"></i> <span>Fatih, İstanbul</span></li>
+                    <li><i class="fas fa-map-marker-alt"></i> <span>Şehremini, Millet Cd. 34098 Fatih/İstanbul</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -91,7 +92,7 @@ $organization_schema = [
     "email" => "info@uzmanpsikologsenaceren.com",
     "address" => [
         "@type" => "PostalAddress",
-        "streetAddress" => "Şehremini, Millet Cd. Aydın apt No:131 Daire 4",
+        "streetAddress" => "Şehremini, Millet Cd. 34098",
         "addressLocality" => "Fatih",
         "addressRegion" => "İstanbul",
         "postalCode" => "34098",
@@ -191,8 +192,8 @@ if (isset($page_type) && $page_type === 'article' && isset($post) && is_array($p
 
 <?php if (!empty($additional_schema)): ?>
     <script type="application/ld+json">
-                                                    <?php echo json_encode($additional_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
-                                                    </script>
+                                                            <?php echo json_encode($additional_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+                                                            </script>
 <?php endif; ?>
 
 

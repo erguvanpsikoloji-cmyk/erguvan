@@ -1,0 +1,4 @@
+[08-Feb-2026 17:57:25 Europe/Minsk] PHP Fatal error:  Uncaught Error: Call to undefined function exec() in /home/erguvanpsi/domains/erguvanpsikoloji.com/public_html/debug_blog.php:28
+Stack trace:
+#0 {main}
+  thrown in /home/erguvanpsi/domains/erguvanpsikoloji.com/public_html/debug_blog.php on line 28

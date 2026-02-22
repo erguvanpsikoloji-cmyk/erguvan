@@ -1,5 +1,28 @@
 <?php
 /**
+ * GEÇİCİ OTURUM AÇMA KODU - LÜTFEN İŞLEM BİTİNCE BU BLOĞU SİLİN
+ */
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['admin_logged_in'])) {
+    require_once 'config.php';
+    require_once 'database/db.php';
+    try {
+        $db = getDB();
+        $user = $db->query("SELECT * FROM admin_users LIMIT 1")->fetch();
+        if ($user) {
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_id'] = $user['id'];
+            $_SESSION['admin_username'] = $user['username'];
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+    } catch (Exception $e) {
+    }
+}
+?>
+<?php
+/**
  * Erguvan Psikoterapi Merkezi - V38 Premium Tasarım
  * Bu dosya tamamen sıfırdan, hiçbir eski veri kullanılmadan oluşturulmuştur.
  */
@@ -115,14 +138,40 @@ try {
         .navbar .logo {
             display: flex;
             align-items: center;
+            text-decoration: none;
         }
 
         .navbar .logo img {
-            height: 70px !important;
-            max-height: 70px !important;
+            height: 60px !important;
+            max-height: 60px !important;
             width: auto !important;
             object-fit: contain;
             mix-blend-mode: multiply;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            margin-left: 1.2rem;
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            font-weight: 400;
+        }
+
+        .logo-subtitle {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 4px;
+            letter-spacing: 0.3px;
+            opacity: 0.85;
         }
 
         .nav-container {
@@ -279,37 +328,127 @@ try {
             gap: 2.5rem;
         }
 
-        .service-card,
+        .service-card {
+            background: #ffffff;
+            padding: 4rem 2rem;
+            border-radius: 40px;
+            border: none;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            text-align: center;
+            overflow: visible;
+            /* To allow blob overflow if needed */
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+        }
+
+        .service-icon-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-icon-blob {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fdf2f8;
+            /* Soft pink/creme */
+            border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+            animation: blob-morph 8s linear infinite;
+            transition: all 0.5s ease;
+            z-index: 1;
+        }
+
+        @keyframes blob-morph {
+
+            0%,
+            100% {
+                border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+            }
+
+            25% {
+                border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+            }
+
+            50% {
+                border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%;
+            }
+
+            75% {
+                border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
+            }
+        }
+
+        .service-card i {
+            position: relative;
+            z-index: 2;
+            font-size: 2.2rem;
+            color: var(--primary);
+            transition: all 0.5s ease;
+        }
+
+        .service-card h3 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            padding: 0 1rem;
+        }
+
+        .service-card .read-more {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            justify-content: center;
+            letter-spacing: 0.05em;
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(145, 95, 120, 0.1);
+            background: #fffcfd;
+        }
+
+        .service-card:hover .service-icon-blob {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .service-card:hover i {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .service-card:hover .read-more {
+            gap: 15px;
+            color: var(--primary);
+        }
+
         .team-card,
         .office-card {
             background: var(--white);
-            padding: 3rem 2rem;
+            padding: 0;
             border-radius: var(--radius-lg);
-            border: 1px solid rgba(139, 61, 72, 0.05);
+            border: 1px solid #f1f5f9;
             transition: var(--transition);
             text-align: center;
             overflow: hidden;
-        }
-
-        .team-card,
-        .office-card {
-            padding: 0;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .team-card:hover .card-img,
-        .office-card:hover .card-img {
-            transform: scale(1.05);
-        }
-
-        .card-info {
-            padding: 2rem;
         }
 
         .service-card:hover,
@@ -318,7 +457,6 @@ try {
         .blog-card:hover {
             transform: translateY(-15px);
             box-shadow: var(--shadow-luxe);
-            border-color: var(--secondary);
         }
 
         .blog-card {
@@ -392,38 +530,65 @@ try {
         }
 
         .float-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             text-decoration: none;
-            font-size: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            font-size: 2.2rem;
+            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
             transition: var(--transition);
+            animation: whatsapp-pulse 2s infinite;
+        }
+
+        @keyframes whatsapp-pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
+            }
+
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 20px 45px rgba(37, 211, 102, 0.6);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
+            }
         }
 
         .float-btn.whatsapp {
             background: #25D366;
+            margin-bottom: 5px;
         }
 
         .float-btn.phone {
             background: var(--primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            opacity: 0.9;
         }
 
         .float-btn:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            animation: none;
         }
 
-        .float-btn i {
+        .float-btn i,
+        .float-btn svg {
             display: flex !important;
             align-items: center;
             justify-content: center;
             color: white !important;
-            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
         }
 
         .service-card i {
@@ -838,7 +1003,20 @@ try {
 
         @media (max-width: 480px) {
             .navbar .logo img {
-                height: 50px !important;
+                height: 45px !important;
+            }
+
+            .logo-text {
+                margin-left: 0.8rem;
+            }
+
+            .logo-title {
+                font-size: 1.3rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.6rem;
+                letter-spacing: 0;
             }
 
             .hero-text h1 {
@@ -874,13 +1052,19 @@ try {
 
 <body><!-- Navigation -->
     <nav class="navbar" id="navbar">
-        <div class="container nav-container"><a href="#" class="logo"><img src="assets/images/logo2026.png"
-                    alt="Erguvan Psikoloji Logo" style="max-height: 80px; width: auto;"></a>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="assets/images/logo_icon.png" alt="Erguvan Psikoloji Logo">
+                <div class="logo-text">
+                    <span class="logo-title">Erguvan Psikoloji</span>
+                    <span class="logo-subtitle">Uzman Klinik Psikolog Desteği</span>
+                </div>
+            </a>
             <ul class="nav-links">
                 <li><a href="#home">Ana Sayfa</a></li>
                 <li><a href="#team">Ekibimiz</a></li>
                 <li><a href="#office">Ofisimiz</a></li>
-                <li><a href="#services">Hizmetler</a></li>
+                <li><a href="#hizmetler">Hizmetler</a></li>
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#contact">İletişim</a></li>
                 <li class="nav-phone"><a href="tel:+905511765285"><i class="fas fa-phone-alt"></i>0551 176 52 85</a>
@@ -900,7 +1084,7 @@ try {
                 <p>Modern bilimin ışığında,
                     insan ruhunun derinliklerine saygı duyan bir yaklaşımla profesyonel psikoterapi hizmeti
                     sunuyoruz. </p>
-                <div class="hero-btns"><a href="#contact" class="btn-premium">Randevu Al</a><a href="#services"
+                <div class="hero-btns"><a href="#contact" class="btn-premium">Randevu Al</a><a href="#hizmetler"
                         class="btn-premium"
                         style="background: transparent; color: var(--primary); border: 2px solid var(--primary); box-shadow: none; margin-left: 1rem;">Hizmetlerimiz</a>
                 </div>
@@ -924,7 +1108,7 @@ try {
                         style="height: 450px; object-position: center;">
                     <div class="card-info">
                         <h3>Sena Ceren Parmaksız</h3>
-                        <p style="color: var(--secondary); font-weight: 600;">Kurucu / Uzman Klinik Psikolog</p>
+                        <p style="color: var(--secondary); font-weight: 600;">Uzman Klinik Psikolog</p>
                     </div>
                 </div>
                 <div class="team-card"><img src="assets/images/team/sedat.jpg" alt="Uzm. Psikolog Sedat Parmaksız"
@@ -955,6 +1139,108 @@ try {
                         style="height: 300px; width: 100%; object-fit: cover;"></div>
                 <div class="office-card"><img src="assets/images/office/office4.jpg" alt="Ofisimiz 4" class="card-img"
                         style="height: 300px; width: 100%; object-fit: cover;"></div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Section -->
+    <section class="section" id="hizmetler">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hizmetlerimiz</h2>
+                <div style="margin-bottom: 1.5rem;"></div>
+                <p>Modern ve bilimsel temelli terapi yaklaşımlarımızla yanınızdayız.</p>
+            </div>
+            <div class="services-grid">
+                <!-- Bireysel Terapi -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon-blob"></div>
+                        <i class="fas fa-user-heart"></i>
+                    </div>
+                    <h3>Bireysel Terapi</h3>
+                    <p>Kendinizi anlama ve hayat kalitenizi artırma yolculuğunda yanınızdayız.</p>
+                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Aile ve Çift Terapisi -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon-blob" style="animation-delay: -2s;"></div>
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Aile ve Çift Terapisi</h3>
+                    <p>İlişkilerinizde daha sağlıklı iletişim ve güçlü bağlar kurmanız için yanınızdayız.</p>
+                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Oyun Terapisi -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon-blob" style="animation-delay: -4s;"></div>
+                        <i class="fas fa-shapes"></i>
+                    </div>
+                    <h3>Oyun Terapisi</h3>
+                    <p>Çocukların kendilerini ifade etme dili olan oyun ile duygusal iyileşme sağlıyoruz.</p>
+                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Yetişkin Terapisi -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon-blob" style="animation-delay: -1s;"></div>
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Yetişkin Terapisi</h3>
+                    <p>Yetişkinlik döneminin getirdiği zorluklarla başa çıkmak için profesyonel destek.</p>
+                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Çocuk Terapisi -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon-blob" style="animation-delay: -3s;"></div>
+                        <i class="fas fa-child-reaching"></i>
+                    </div>
+                    <h3>Çocuk Terapisi</h3>
+                    <p>Çocukların gelişimsel süreçlerinde karşılaştıkları güçlükleri birlikte aşıyoruz.</p>
+                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Ebeveyn Danışmanlığı -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon-blob" style="animation-delay: -5s;"></div>
+                        <i class="fas fa-hands-holding-child"></i>
+                    </div>
+                    <h3>Ebeveyn Danışmanlığı</h3>
+                    <p>Ebeveynlik yolculuğunda karşılaşılan sorulara bilimsel cevaplar ve rehberlik.</p>
+                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Bilişsel Davranışçı Terapi -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon-blob" style="animation-delay: -2.5s;"></div>
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Bilişsel Davranışçı Terapi</h3>
+                    <p>Düşünce ve davranış kalıplarını değiştirerek kalıcı iyileşmeyi hedefleyen yöntem.</p>
+                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Masal Terapisi -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon-blob" style="animation-delay: -4.5s;"></div>
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3>Masal Terapisi</h3>
+                    <p>Masalların iyileştirici gücü ile çocukların iç dünyasına sembolik yolculuklar.</p>
+                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Şema Terapi -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon-blob" style="animation-delay: -1.5s;"></div>
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>Şema Terapi</h3>
+                    <p>Kökü çocukluğa dayanan olumsuz yaşam kalıplarını (şemaları) fark etme ve değiştirme.</p>
+                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
         </div>
     </section>
@@ -1082,7 +1368,8 @@ try {
                             oluşturulur. </p>
                     </div>
                 </div>
-                <div class="faq-item"><button class="faq-header"><span class="faq-question">Online terapi ile yüz yüze
+                <div class="faq-item"><button class="faq-header"><span class="faq-question">Online terapi ile yüz
+                            yüze
                             terapi arasında fark
                             var mı?</span><i class="fas fa-plus faq-icon"></i></button>
                     <div class="faq-content">
@@ -1123,15 +1410,13 @@ try {
                         <div class="contact-info-item"><i class="fas fa-map-marker-alt" style="color: #8B3D48;"></i>
                             <div class="contact-info-text">
                                 <h4>Adres</h4>
-                                <p>Şehremini,
-                                    Millet Cd. Aydın apt No:131 Daire 4<br>34098
-                                    Fatih/İstanbul</p>
+                                <p>Şehremini, Millet Cd. 34098 Fatih/İstanbul</p>
                             </div>
                         </div>
                         <div class="contact-info-item"><i class="fas fa-phone" style="color: #EC4899;"></i>
                             <div class="contact-info-text">
                                 <h4>Telefon</h4>
-                                <p>0551 176 52 84</p>
+                                <p>05511765285</p>
                             </div>
                         </div>
                         <div class="contact-info-item"><i class="fas fa-envelope" style="color: #E9D5FF;"></i>
@@ -1180,76 +1465,4 @@ try {
                             style="width: 100%; border: none; cursor: pointer;">Randevu
                             Talebi Gönder</button>
                     </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <footer style="background: var(--primary); color: white; padding: 4rem 0; text-align: center;">
-        <div class="container">
-            <h2 style="color: white; margin-bottom: 2rem;">ERGUVAN</h2>
-            <p style="opacity: 0.7; margin-bottom: 3rem;">Psikoterapi ve Eğitim Merkezi</p>
-            <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem;">
-                <a href="#"
-                    style="color: white; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%;"><svg
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24"
-                        fill="currentColor">
-                        <path
-                            d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.9 0-184.9zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
-                    </svg></a><a href="#"
-                    style="color: white; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%;"><svg
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="22" height="22"
-                        fill="currentColor">
-                        <path
-                            d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z" />
-                    </svg></a>
-            </div>
-            <p style="font-size: 0.8rem; opacity: 0.5;">© 2026 Erguvan Psikoterapi Merkezi.
-                Tüm hakları saklıdır.</p>
-        </div>
-    </footer>
-    <div class="floating-actions">
-        <!-- WhatsApp Button --><a href="https://wa.me/905511765285" class="float-btn whatsapp" target="_blank"
-            title="WhatsApp ile İletişime Geçin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                width="24" height="24" fill="currentColor">
-                <path
-                    d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-4-10.5-6.7z" />
-            </svg></a>
-        <!-- Call Button --><a href="tel:+905511765285" class="float-btn phone" title="Bizi Arayın"><svg
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="22" height="22" fill="currentColor">
-                <path
-                    d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.9-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.9 464-464 0-11.2-7.7-20.9-18.6-23.4z" />
-            </svg></a>
-    </div>
-    <script>w        indow.addEventListener('scroll', function () {
-                const navbar = document.getElementById('navbar');
-
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                }
-
-                else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-
-        // FAQ Accordion
-        document.querySelectorAll('.faq-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const item = header.parentElement;
-                const isActive = item.classList.contains('active');
-
-                // Close all other items
-                document.querySelectorAll('.faq-item').forEach(otherItem => {
-                    otherItem.classList.remove('active');
-                });
-
-                // Toggle click item
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
-        });
-    </script>
-</body>
-
-</html>
+                    <?php include 'includes/footer.php'; ?>

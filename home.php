@@ -142,44 +142,65 @@ if (empty($services)) {
     $services = [
         [
             'title' => 'Bireysel Terapi',
-            'description' => 'Kişisel zorluklarla başa çıkmanıza yardımcı olan birebir görüşmeler.',
-            'icon' => '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>',
+            'description' => 'Kendinizi anlama ve hayat kalitenizi artırma yolculuğunda yanınızdayız.',
+            'icon' => '<i class="fas fa-user-heart"></i>',
             'features' => "Anksiyete ve Depresyon\nStres Yönetimi\nÖzgüven Sorunları",
             'is_featured' => 1
         ],
         [
-            'title' => 'Aile Çift Terapisi',
-            'description' => 'İlişkinizdeki sorunları çözmek ve aile içi iletişimi güçlendirmek için destek.',
-            'icon' => '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
-            'features' => "İletişim Problemleri\nEvlilikte Uyum Sorunları\nBoşanma Süreci",
-            'is_featured' => 1
-        ],
-        [
-            'title' => 'Online Terapi',
-            'description' => 'Dilediğiniz yerden, konforlu bir şekilde uzman psikolog desteğine ulaşın.',
-            'icon' => '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>',
-            'features' => "Görüntülü Görüşme\nEsnek Planlama\nDünyanın Her Yerinden",
-            'is_featured' => 1
-        ],
-        [
-            'title' => 'Psikolojik Ölçekler',
-            'description' => 'Bilimsel geçerliliği olan test ve envanterlerle detaylı analiz ve değerlendirme.',
-            'icon' => '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>',
-            'features' => "Kişilik Testleri\nGelişim Testleri\nKlinik Ölçekler",
+            'title' => 'Aile ve Çift Terapisi',
+            'description' => 'İlişkilerinizde daha sağlıklı iletişim ve güçlü bağlar kurmanız için yanınızdayız.',
+            'icon' => '<i class="fas fa-hand-holding-heart"></i>',
+            'features' => "İletişim Sorunları\nÇatışma Çözme\nEvlilik Öncesi Danışmanlık",
             'is_featured' => 1
         ],
         [
             'title' => 'Oyun Terapisi',
-            'description' => 'Çocukların duygusal ve davranışsal sorunlarını oyun yoluyla ifade etmelerini sağlayan terapi yöntemi.',
-            'icon' => '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>',
+            'description' => 'Çocukların kendilerini ifade etme dili olan oyun ile duygusal iyileşme sağlıyoruz.',
+            'icon' => '<i class="fas fa-shapes"></i>',
             'features' => "Duygusal Düzenleme\nTravma ve Yas\nDavranış Sorunları",
             'is_featured' => 1
         ],
         [
-            'title' => 'Çocuk ve Ergen Terapisi',
-            'description' => 'Gençlerin gelişimsel süreçlerinde karşılaştıkları zorluklara yönelik destek.',
-            'icon' => '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>',
-            'features' => "Okul Problemleri\nSınav Kaygısı\nDavranış Sorunları",
+            'title' => 'Yetişkin Terapisi',
+            'description' => 'Yetişkinlik döneminin getirdiği zorluklarla başa çıkmak için profesyonel destek.',
+            'icon' => '<i class="fas fa-user-tie"></i>',
+            'features' => "Yaşam Krizi\nİlişki Sorunları\nKariyer Danışmanlığı",
+            'is_featured' => 1
+        ],
+        [
+            'title' => 'Çocuk Terapisi',
+            'description' => 'Çocukların gelişimsel süreçlerinde karşılaştıkları güçlükleri birlikte aşıyoruz.',
+            'icon' => '<i class="fas fa-child-reaching"></i>',
+            'features' => "Gelişim Takibi\nKorku ve Kaygılar\nSosyal Beceriler",
+            'is_featured' => 1
+        ],
+        [
+            'title' => 'Ebeveyn Danışmanlığı',
+            'description' => 'Ebeveynlik yolculuğunda karşılaşılan sorulara bilimsel cevaplar ve rehberlik.',
+            'icon' => '<i class="fas fa-hands-holding-child"></i>',
+            'features' => "Pozitif Ebeveynlik\nSınır Koyma\nİletişim Kurma",
+            'is_featured' => 1
+        ],
+        [
+            'title' => 'Bilişsel Davranışçı Terapi',
+            'description' => 'Düşünce ve davranış kalıplarını değiştirerek kalıcı iyileşmeyi hedefleyen yöntem.',
+            'icon' => '<i class="fas fa-brain"></i>',
+            'features' => "Düşünce Yapılanması\nMaruz Bırakma\nProblem Çözme",
+            'is_featured' => 1
+        ],
+        [
+            'title' => 'Masal Terapisi',
+            'description' => 'Masalların iyileştirici gücü ile çocukların iç dünyasına sembolik yolculuklar.',
+            'icon' => '<i class="fas fa-wand-magic-sparkles"></i>',
+            'features' => "Sembolik Anlatım\nDuygusal Aktarım\nYaratıcı Çözümler",
+            'is_featured' => 1
+        ],
+        [
+            'title' => 'Şema Terapi',
+            'description' => 'Kökü çocukluğa dayanan olumsuz yaşam kalıplarını (şemaları) fark etme ve değiştirme.',
+            'icon' => '<i class="fas fa-seedling"></i>',
+            'features' => "Şema Farkındalığı\nMod Çalışması\nYaşam Kalıpları",
             'is_featured' => 1
         ]
     ];
@@ -498,6 +519,143 @@ include __DIR__ . '/includes/header.php';
     </div>
 </section>
 
+<style>
+/* Service Card Soft & Elegant Styles for home.php */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+    padding: 1rem;
+}
+
+.service-card {
+    background: #ffffff;
+    padding: 4rem 2rem;
+    border-radius: 40px;
+    border: none;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.service-icon-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-icon-blob {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fdf2f8; /* Soft pink/creme */
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    animation: blob-morph 8s linear infinite;
+    transition: all 0.5s ease;
+    z-index: 1;
+}
+
+@keyframes blob-morph {
+    0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+    25% { border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%; }
+    50% { border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%; }
+    75% { border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%; }
+}
+
+.service-card .service-icon {
+    position: relative !important;
+    z-index: 2 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    margin-bottom: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    color: #2c3e50 !important;
+    font-size: 2.2rem !important;
+}
+
+.service-card h3 {
+    font-size: 1.6rem;
+    color: #2c3e50;
+    margin-bottom: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.service-card p {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+    text-align: left;
+    width: 100%;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.service-features li i {
+    color: #915f78;
+    font-size: 0.8rem;
+}
+
+.btn-card {
+    margin-top: auto;
+    background: rgba(145, 95, 120, 0.05);
+    color: #915f78;
+    padding: 0.8rem 2.2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(145, 95, 120, 0.1);
+}
+
+.service-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(145, 95, 120, 0.1);
+    background: #fffcfd;
+}
+
+.service-card:hover .service-icon-blob {
+    background: #2c3e50;
+    transform: scale(1.1);
+}
+
+.service-card:hover .service-icon {
+    color: white !important;
+}
+
+.service-card:hover .btn-card {
+    background: #915f78;
+    color: white;
+}
+</style>
+
 <!-- Testimonials initialization -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -621,13 +779,14 @@ include __DIR__ . '/includes/header.php';
             </p>
         </div>
         <div class="map-wrapper mt-5">
-            <iframe src="https:
-                width=" 100%" height="500" style="border:0; border-radius: 30px; box-shadow: var(--shadow-lg);"
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.512686734138!2d28.930335011680577!3d41.01391597123169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabbba784279b9%3A0x3be242b5be4b22f9!2zxZ9laHJlbWluaSwgTWlsbGV0IENkLiAzNDA5OCBGYXRpaC_EsHN0YW5idWw!5e0!3m2!1str!2str!4v1707203000000!5m2!1str!2str"
+                width="100%" height="500" style="border:0; border-radius: 30px; box-shadow: var(--shadow-lg);"
                 allowfullscreen="" loading="lazy">
             </iframe>
             <div class="text-center mt-4">
-                <a href="https:
-                    target=" _blank" class="btn btn-secondary">
+                <a href="https://www.google.com/maps?daddr=Şehremini,+Millet+Cd.+34098+Fatih/İstanbul" target="_blank"
+                    class="btn btn-secondary">
                     <i class="fas fa-directions mr-2"></i> Yol Tarifi Al
                 </a>
             </div>

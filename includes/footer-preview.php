@@ -16,16 +16,16 @@
             </div>
             <div class="footer-contact">
                 <h4>İletişim</h4>
-                <p><i class="fas fa-phone"></i> 0551 176 52 85</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+905511765285"
+                        style="color:inherit; text-decoration:none;">05511765285</a></p>
                 <p><i class="fas fa-envelope"></i> info@uzmanpsikologsenaceren.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Şehremini, Millet Cd. 34098 Fatih/İstanbul</p>
             </div>
             <div class="footer-social">
                 <h4>Takip Edin</h4>
                 <div class="social-links">
                     <a href="https://instagram.com/uzm.psk.senaceren" target="_blank"><i
                             class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-facebook"></i></a>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@ $organization_schema = [
     "email" => "info@uzmanpsikologsenaceren.com",
     "address" => [
         "@type" => "PostalAddress",
-        "streetAddress" => "Şehremini, Millet Cd. Aydın apt No:131 Daire 4",
+        "streetAddress" => "Şehremini, Millet Cd. 34098",
         "addressLocality" => "Fatih",
         "addressRegion" => "İstanbul",
         "postalCode" => "34098",
@@ -181,8 +181,8 @@ if (isset($page_type) && $page_type === 'article' && isset($post) && is_array($p
 
 <?php if (!empty($additional_schema)): ?>
     <script type="application/ld+json">
-                                                        <?php echo json_encode($additional_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
-                                                        </script>
+                                                                <?php echo json_encode($additional_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+                                                                </script>
 <?php endif; ?>
 
 

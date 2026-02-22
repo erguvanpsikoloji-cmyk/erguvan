@@ -551,7 +551,7 @@ include __DIR__ . '/includes/header.php';
                     <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
                     <div class="text">
                         <h3>Adres</h3>
-                        <p><?php echo htmlspecialchars($site_settings['address'] ?? 'Şehremini, Millet Cd. Aydın apt No:131 Daire 4, Fatih/İstanbul'); ?>
+                        <p><?php echo htmlspecialchars($site_settings['address'] ?? 'Şehremini, Millet Cd. 34098 Fatih/İstanbul'); ?>
                         </p>
                     </div>
                 </div>
@@ -560,7 +560,7 @@ include __DIR__ . '/includes/header.php';
                     <div class="text">
                         <h3>Telefon</h3>
                         <p><a
-                                href="tel:<?php echo str_replace(' ', '', $site_settings['phone'] ?? '05511765285'); ?>"><?php echo htmlspecialchars($site_settings['phone'] ?? '0551 176 52 85'); ?></a>
+                                href="tel:<?php echo str_replace(' ', '', $site_settings['phone'] ?? '05511765285'); ?>"><?php echo htmlspecialchars($site_settings['phone'] ?? '05511765285'); ?></a>
                         </p>
                     </div>
                 </div>
@@ -617,18 +617,18 @@ include __DIR__ . '/includes/header.php';
         <div class="section-title text-center">
             <span class="subtitle">Bizi Ziyaret Edin</span>
             <h2>Konumumuz</h2>
-            <p><?php echo htmlspecialchars($site_settings['address'] ?? 'Şehremini, Millet Cd. Aydın apt No:131 Daire 4, Fatih/İstanbul'); ?>
+            <p><?php echo htmlspecialchars($site_settings['address'] ?? 'Şehremini, Millet Cd. 34098 Fatih/İstanbul'); ?>
             </p>
         </div>
         <div class="map-wrapper mt-5">
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.512686734138!2d28.930335011680577!3d41.01391597123169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabbba784279b9%3A0x3be242b5be4b22f9!2zxZ9laHJlbWluaSwgVHVyZ3V0IMOWemFsIE1pbGxldCBDZC4gQXlkxLFuIGFwdCBObzoxMzEgRGFpcmUgNCwgMzQwOTggRmF0aWgvxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1707203000000!5m2!1str!2str"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.512686734138!2d28.930335011680577!3d41.01391597123169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabbba784279b9%3A0x3be242b5be4b22f9!2zxZ9laHJlbWluaSwgTWlsbGV0IENkLiAzNDA5OCBGYXRpaC_EsHN0YW5idWw!5e0!3m2!1str!2str!4v1707203000000!5m2!1str!2str"
                 width="100%" height="500" style="border:0; border-radius: 30px; box-shadow: var(--shadow-lg);"
                 allowfullscreen="" loading="lazy">
             </iframe>
             <div class="text-center mt-4">
-                <a href="https://www.google.com/maps?daddr=Şehremini,+Turgut+Özal+Millet+Cd.+Aydın+apt+No:131+Daire+4,+34098+Fatih/İstanbul"
-                    target="_blank" class="btn btn-secondary">
+                <a href="https://www.google.com/maps?daddr=Şehremini,+Millet+Cd.+34098+Fatih/İstanbul" target="_blank"
+                    class="btn btn-secondary">
                     <i class="fas fa-directions mr-2"></i> Yol Tarifi Al
                 </a>
             </div>

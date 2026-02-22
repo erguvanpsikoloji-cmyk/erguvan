@@ -15,7 +15,7 @@ $post = $post->fetch();
 if (!$post)
     redirect(BASE_URL . '/blog');
 
-$page_title = $post['title'];
+$page_title = $post['meta_title'] ?: $post['title'];
 $page_description = $post['meta_description'] ?: $post['excerpt'];
 
 if (!function_exists('slugify')) {
