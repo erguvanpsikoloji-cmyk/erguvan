@@ -231,6 +231,31 @@ try {
             display: none;
         }
 
+        /* Desktop: hide mobile-only items and nav-phone */
+        .mobile-only {
+            display: none !important;
+        }
+
+        .nav-phone {
+            display: none !important;
+        }
+
+        /* Underline hover effect - restored */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
         .menu-toggle {
             display: none;
             flex-direction: column;
