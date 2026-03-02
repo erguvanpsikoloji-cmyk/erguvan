@@ -424,7 +424,10 @@ try {
 
         .service-card i {
             font-size: 1.5rem;
-            color: var(--secondary);
+            color: var(--secondary) !important;
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 900;
+            -webkit-text-fill-color: var(--secondary) !important;
         }
 
         .service-card h3 {
@@ -462,19 +465,30 @@ try {
             box-shadow: 0 16px 40px rgba(145, 95, 120, 0.10);
         }
 
-        .service-card:hover .service-icon-blob {
-            background: var(--primary);
-            transform: scale(1.1);
+        .service-card:hover .service-icon-wrapper {
+            background: var(--secondary);
+            transform: scale(1.05);
         }
 
         .service-card:hover i {
-            color: white;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
             transform: scale(1.1);
         }
 
-        .service-card:hover .read-more {
-            gap: 15px;
-            color: var(--primary);
+        .service-card:hover .service-focus-label {
+            color: #ffffff;
+            opacity: 0.9;
+        }
+
+        .service-card:hover .service-focus-areas {
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .service-card:hover h3,
+        .service-card:hover p {
+            color: #ffffff;
         }
 
         .team-card,

@@ -25,7 +25,7 @@ if (strpos($dir, $doc_root) !== 0) {
 }
 
 // Versiyon - Cache temizleme ve asset güncellemeleri için
-define('VERSION', 'v40');
+define('VERSION', 'v41');
 
 // Google Maps API Key
 define('GOOGLE_MAPS_API_KEY', 'AIzaSyA_BZgHTkpStO80rI3Ksbd9Dj_bF7P1CxE');
