@@ -422,12 +422,18 @@ try {
             flex-shrink: 0;
         }
 
-        .service-card i {
-            font-size: 1.5rem;
-            color: var(--secondary) !important;
-            font-family: "Font Awesome 6 Free" !important;
-            font-weight: 900;
-            -webkit-text-fill-color: var(--secondary) !important;
+        .service-card svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--secondary);
+            stroke-width: 1.8;
+            fill: none;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover svg {
+            stroke: #ffffff;
+            transform: scale(1.1);
         }
 
         .service-card h3 {
@@ -471,9 +477,7 @@ try {
         }
 
         .service-card:hover i {
-            color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
-            transform: scale(1.1);
+            display: none;
         }
 
         .service-card:hover .service-focus-label {
@@ -1304,7 +1308,11 @@ try {
                 <!-- Bireysel Terapi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-user"></i>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
                     </div>
                     <h3>Bireysel Terapi</h3>
                     <p>Kendinizi anlama ve hayat kalitenizi artırma yolculuğunda yanınızdayız.</p>
@@ -1314,7 +1322,13 @@ try {
                 <!-- Aile ve Çift Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-people-group"></i>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
                     </div>
                     <h3>Aile ve Çift Terapisi</h3>
                     <p>İlişkilerinizde daha sağlıklı iletişim ve güçlü bağlar kurmanız için yanınızdayız.</p>
@@ -1324,7 +1338,19 @@ try {
                 <!-- Oyun Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-puzzle-piece"></i>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894-4.924-.869-6.14 6.025-1.216 6.894z">
+                            </path>
+                            <path d="M4.173 19.547c.522-4.933 7.375-4.521 6.854.412-.522 4.933-7.375 4.521-6.854-.412z">
+                            </path>
+                            <path
+                                d="M18.156 16.51c2.147-4.453-4.228-7.535-6.375-3.082-2.147 4.453 4.228 7.535 6.375 3.082z">
+                            </path>
+                            <path d="M9.374 8.243c4.782-1.42 4.14-8.245-.641-6.824-4.783 1.42-4.14 8.245.641 6.824z">
+                            </path>
+                        </svg>
                     </div>
                     <h3>Oyun Terapisi</h3>
                     <p>Çocukların kendilerini ifade etme dili olan oyun ile duygusal iyileşme sağlıyoruz.</p>
@@ -1334,7 +1360,11 @@ try {
                 <!-- Yetişkin Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-user-tie"></i>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
                     </div>
                     <h3>Yetişkin Terapisi</h3>
                     <p>Yetişkinlik döneminin getirdiği zorluklarla başa çıkmak için profesyonel destek.</p>
@@ -1344,7 +1374,10 @@ try {
                 <!-- Çocuk Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-child-reaching"></i>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
                     </div>
                     <h3>Çocuk Terapisi</h3>
                     <p>Çocukların gelişimsel süreçlerinde karşılaştıkları güçlükleri birlikte aşıyoruz.</p>
@@ -1354,7 +1387,12 @@ try {
                 <!-- Ebeveyn Danışmanlığı -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-hands-holding-child"></i>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">
+                            </path>
+                        </svg>
                     </div>
                     <h3>Ebeveyn Danışmanlığı</h3>
                     <p>Ebeveynlik yolculuğunda karşılaşılan sorulara bilimsel cevaplar ve rehberlik.</p>
@@ -1364,7 +1402,14 @@ try {
                 <!-- Bilişsel Davranışçı Terapi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-brain"></i>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9.5 20a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"></path>
+                            <path d="M14.5 20a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"></path>
+                            <path d="M12 15V7"></path>
+                            <path d="M12 7a5 5 0 1 1 10 0 5 5 0 1 1-10 0z"></path>
+                            <path d="M12 7a5 5 0 1 0-10 0 5 5 0 1 0 10 0z"></path>
+                        </svg>
                     </div>
                     <h3>Bilişsel Davranışçı Terapi (BDT)</h3>
                     <p>Düşünce ve davranış kalıplarını değiştirerek kalıcı iyileşmeyi hedefleyen yöntem.</p>
@@ -1374,7 +1419,11 @@ try {
                 <!-- Masal Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-book-open"></i>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
                     </div>
                     <h3>Masal Terapisi</h3>
                     <p>Masalların iyileştirici gücü ile çocukların iç dünyasına sembolik yolculuklar.</p>
@@ -1384,7 +1433,12 @@ try {
                 <!-- Şema Terapi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-diagram-project"></i>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
                     </div>
                     <h3>Şema Terapi</h3>
                     <p>Kökü çocukluğa dayanan olumsuz yaşam kalıplarını fark etme ve dönüştürme.</p>
