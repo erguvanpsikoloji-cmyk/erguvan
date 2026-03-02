@@ -1,72 +1,83 @@
 // Basic Interactivity
 document.addEventListener('DOMContentLoaded', () => {
-    // Scroll Effect for Header
-    const header = document.querySelector('.header');
+    // Scroll Effect for Navbar
+    const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-            header.classList.add('scrolled');
+            if (navbar) navbar.classList.add('scrolled');
         } else {
-            header.classList.remove('scrolled');
+            if (navbar) navbar.classList.remove('scrolled');
         }
     });
 
-    // Mobile Menu Toggle
+    // ==================== HAMBURGER MENU ====================
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
 
+    function openMenu() {
+        navMenu.classList.add('active');
+        navToggle.classList.add('active');
+        navToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden'; // Lock scroll while menu open
+    }
+
+    function closeMenu() {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = ''; // Restore scroll
+    }
+
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-            const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
-            navToggle.setAttribute('aria-expanded', !expanded);
+            if (navMenu.classList.contains('active')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
         });
 
-        // Close menu when a link is clicked
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-                navToggle.setAttribute('aria-expanded', 'false');
-            });
+        // Close menu when any nav link is clicked
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close when clicking outside menu
+        document.addEventListener('click', (e) => {
+            if (navMenu.classList.contains('active') &&
+                !navMenu.contains(e.target) &&
+                !navToggle.contains(e.target)) {
+                closeMenu();
+            }
         });
     }
 
-    // FAQ Accordion
+    // ==================== FAQ ACCORDION ====================
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {
-        const btn = item.querySelector('.faq-btn');
+        const btn = item.querySelector('.faq-btn, .faq-header');
         if (btn) {
             btn.addEventListener('click', () => {
-                // Close other items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                    }
+                faqItems.forEach(other => {
+                    if (other !== item) other.classList.remove('active');
                 });
-                // Toggle current item
                 item.classList.toggle('active');
             });
         }
     });
 
-    // Smooth Scrolling for anchored links
+    // ==================== SMOOTH SCROLL ====================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             if (href === '#') return;
-            if (href === '#randevu' || href === '#hizmetler' || href === '#iletisim' || href === '#sss' || href === '#ofisimiz' || href === '#sertifikalar' || href === '#ekibimiz' || href === '#hakkimizda') {
+            const target = document.querySelector(href);
+            if (target) {
                 e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    const headerHeight = document.querySelector('.header').offsetHeight;
-                    const offsetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
+                const navbarEl = document.querySelector('.navbar');
+                const offset = navbarEl ? navbarEl.offsetHeight : 80;
+                const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top, behavior: 'smooth' });
             }
         });
     });

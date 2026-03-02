@@ -55,10 +55,19 @@ try {
     <meta name="description"
         content="Erguvan Psikoterapi Merkezi - Modern, akademik ve insan odaklı psikoterapi hizmetleri.">
 
-    <!-- Fonts -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Prata&display=swap');
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <!-- Critical Image Preload -->
+    <?php $hero_webp = webp_url('assets/images/hero-psikolojik-destek.jpg'); ?>
+    <link rel="preload" as="image" href="<?php echo $hero_webp; ?>" fetchpriority="high">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Prata&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+
+    <style>
         :root {
             /* Corporate Color Palette (Logo Aligned) */
             --primary: #0F172A;
@@ -218,8 +227,38 @@ try {
             transition: var(--transition);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
+        .nav-links img {
+            display: none;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 10px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
         }
 
         /* Hero Section */
@@ -228,9 +267,11 @@ try {
             display: flex;
             align-items: center;
             background: linear-gradient(135deg, var(--luxe-bg) 0%, #FFFFFF 100%);
-            padding-top: 80px;
+            padding-top: 120px;
+            /* Increased to avoid navbar overlap */
             position: relative;
-            overflow: hidden;
+            overflow: visible !important;
+            /* Allow content to overflow if needed */
         }
 
         .hero-content {
@@ -238,17 +279,21 @@ try {
             grid-template-columns: 1.2fr 1fr;
             gap: 4rem;
             align-items: center;
+            overflow: visible !important;
         }
 
         .hero-text h1 {
             font-size: clamp(3rem, 8vw, 4.5rem);
             color: var(--primary);
             margin-bottom: 2rem;
+            line-height: 1.2;
         }
 
         .hero-text h1 span {
             color: var(--secondary);
             display: block;
+            margin-top: 0.5rem;
+            /* Space between Erguvan and Psikoloji */
         }
 
         .hero-text p {
@@ -285,6 +330,9 @@ try {
             border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow-luxe);
+            aspect-ratio: 1024 / 768;
+            background: rgba(145, 95, 120, 0.05);
+            /* Placeholder background */
         }
 
         .hero-image-wrapper img {
@@ -927,14 +975,76 @@ try {
 
         /* MOBILE RESPONSIVENESS FIXES */
         @media (max-width: 900px) {
+            .nav-container {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-text {
+                margin-left: 0.8rem;
+            }
+
+            .logo-title {
+                font-size: 1.4rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+                z-index: 1000;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+                color: var(--primary);
+            }
+
+            .nav-container .btn-premium {
+                display: none;
+                /* Hide button in mobile header */
+            }
+
+            .nav-links .btn-premium {
+                display: inline-block;
+                width: auto;
+            }
+
             .hero-content {
                 grid-template-columns: 1fr;
                 text-align: center;
                 gap: 3rem;
             }
 
+            .hero {
+                padding-top: 140px !important;
+            }
+
             .hero-text h1 {
-                font-size: 3rem;
+                font-size: clamp(2rem, 10vw, 3rem) !important;
+                line-height: 1.5 !important;
+                margin-bottom: 1.5rem !important;
             }
 
             .hero-btns {
@@ -1019,8 +1129,20 @@ try {
                 letter-spacing: 0;
             }
 
+            .hero {
+                padding-top: 120px !important;
+            }
+
             .hero-text h1 {
-                font-size: 2.5rem;
+                font-size: clamp(1.6rem, 12vw, 2rem) !important;
+                line-height: 1.6 !important;
+                padding: 0.5rem 0 !important;
+                display: block !important;
+            }
+
+            .hero-text h1 span {
+                display: block !important;
+                line-height: 1 !important;
             }
 
             .btn-premium {
@@ -1047,29 +1169,49 @@ try {
         }
     </style>
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css" media="print"
+        onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    </noscript>
 </head>
 
 <body><!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="#" class="logo">
-                <img src="assets/images/logo_icon.png" alt="Erguvan Psikoloji Logo">
+                <img src="<?php echo webp_url('assets/images/logo_icon.png'); ?>" alt="Erguvan Psikoloji Logo"
+                    fetchpriority="high" width="124" height="130">
                 <div class="logo-text">
                     <span class="logo-title">Erguvan Psikoloji</span>
                     <span class="logo-subtitle">Uzman Klinik Psikolog Desteği</span>
                 </div>
             </a>
-            <ul class="nav-links">
-                <li><a href="#home">Ana Sayfa</a></li>
-                <li><a href="#team">Ekibimiz</a></li>
-                <li><a href="#office">Ofisimiz</a></li>
-                <li><a href="#hizmetler">Hizmetler</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#contact">İletişim</a></li>
-                <li class="nav-phone"><a href="tel:+905511765285"><i class="fas fa-phone-alt"></i>0551 176 52 85</a>
+
+            <div class="menu-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-links" id="navMenu">
+                <li><a href="#home" class="nav-link">Ana Sayfa</a></li>
+                <li><a href="#team" class="nav-link">Ekibimiz</a></li>
+                <li><a href="#office" class="nav-link">Ofisimiz</a></li>
+                <li><a href="#hizmetler" class="nav-link">Hizmetler</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#contact" class="nav-link">İletişim</a></li>
+                <li class="nav-phone">
+                    <a href="tel:+905511765285" class="nav-link">
+                        <i class="fas fa-phone-alt"></i> 0551 176 52 85
+                    </a>
                 </li>
-            </ul><a href="tel:+905511765285" class="btn-premium"
+                <li class="mobile-only">
+                    <a href="tel:+905511765285" class="btn-premium"
+                        style="padding: 1rem 2rem; width: 100%; text-align: center;">Hemen Ara</a>
+                </li>
+            </ul>
+            <a href="tel:+905511765285" class="btn-premium head-cta"
                 style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">Hemen Ara</a>
         </div>
     </nav>
@@ -1089,9 +1231,10 @@ try {
                         style="background: transparent; color: var(--primary); border: 2px solid var(--primary); box-shadow: none; margin-left: 1rem;">Hizmetlerimiz</a>
                 </div>
             </div>
-            <div class="hero-image-wrapper"><img src="assets/images/hero-psikolojik-destek.jpg"
-                    alt="Erguvan Psikoloji Ofis"
-                    style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);"></div>
+            <div class="hero-image-wrapper">
+                <img src="<?php echo $hero_webp; ?>" alt="Erguvan Psikoloji Ofis" fetchpriority="high" width="1024"
+                    height="768" style="width: 100%; height: auto; object-fit: cover; border-radius: var(--radius-lg);">
+            </div>
         </div>
     </header>
     <!-- Team Section -->
@@ -1131,14 +1274,18 @@ try {
                 <div></div>
             </div>
             <div class="office-grid">
-                <div class="office-card"><img src="assets/images/office/ofis-1.jpg" alt="Ofisimiz 1" class="card-img"
-                        style="height: 300px; width: 100%; object-fit: cover;"></div>
-                <div class="office-card"><img src="assets/images/office/office2.jpg" alt="Ofisimiz 2" class="card-img"
-                        style="height: 300px; width: 100%; object-fit: cover;"></div>
-                <div class="office-card"><img src="assets/images/office/office3.jpg" alt="Ofisimiz 3" class="card-img"
-                        style="height: 300px; width: 100%; object-fit: cover;"></div>
-                <div class="office-card"><img src="assets/images/office/office4.jpg" alt="Ofisimiz 4" class="card-img"
-                        style="height: 300px; width: 100%; object-fit: cover;"></div>
+                <div class="office-card"><img src="<?php echo webp_url('assets/images/office/ofis-1.jpg'); ?>"
+                        alt="Ofisimiz 1" class="card-img" style="height: 300px; width: 100%; object-fit: cover;"
+                        loading="lazy"></div>
+                <div class="office-card"><img src="<?php echo webp_url('assets/images/office/office2.jpg'); ?>"
+                        alt="Ofisimiz 2" class="card-img" style="height: 300px; width: 100%; object-fit: cover;"
+                        loading="lazy"></div>
+                <div class="office-card"><img src="<?php echo webp_url('assets/images/office/office3.jpg'); ?>"
+                        alt="Ofisimiz 3" class="card-img" style="height: 300px; width: 100%; object-fit: cover;"
+                        loading="lazy"></div>
+                <div class="office-card"><img src="<?php echo webp_url('assets/images/office/office4.jpg'); ?>"
+                        alt="Ofisimiz 4" class="card-img" style="height: 300px; width: 100%; object-fit: cover;"
+                        loading="lazy"></div>
             </div>
         </div>
     </section>
