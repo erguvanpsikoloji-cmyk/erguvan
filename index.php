@@ -1290,7 +1290,7 @@ try {
                 <!-- Bireysel Terapi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-user-heart"></i>
+                        <i class="fas fa-user"></i>
                     </div>
                     <h3>Bireysel Terapi</h3>
                     <p>Kendinizi anlama ve hayat kalitenizi artırma yolculuğunda yanınızdayız.</p>
@@ -1300,7 +1300,7 @@ try {
                 <!-- Aile ve Çift Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-hand-holding-heart"></i>
+                        <i class="fas fa-people-group"></i>
                     </div>
                     <h3>Aile ve Çift Terapisi</h3>
                     <p>İlişkilerinizde daha sağlıklı iletişim ve güçlü bağlar kurmanız için yanınızdayız.</p>
@@ -1310,7 +1310,7 @@ try {
                 <!-- Oyun Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-shapes"></i>
+                        <i class="fas fa-puzzle-piece"></i>
                     </div>
                     <h3>Oyun Terapisi</h3>
                     <p>Çocukların kendilerini ifade etme dili olan oyun ile duygusal iyileşme sağlıyoruz.</p>
@@ -1360,7 +1360,7 @@ try {
                 <!-- Masal Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <i class="fas fa-book-open"></i>
                     </div>
                     <h3>Masal Terapisi</h3>
                     <p>Masalların iyileştirici gücü ile çocukların iç dünyasına sembolik yolculuklar.</p>
@@ -1370,7 +1370,7 @@ try {
                 <!-- Şema Terapi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <i class="fas fa-seedling"></i>
+                        <i class="fas fa-diagram-project"></i>
                     </div>
                     <h3>Şema Terapi</h3>
                     <p>Kökü çocukluğa dayanan olumsuz yaşam kalıplarını fark etme ve dönüştürme.</p>
