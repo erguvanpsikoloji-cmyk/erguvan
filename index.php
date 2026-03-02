@@ -393,109 +393,73 @@ try {
         }
 
         /* Cards */
-        .services-grid,
-        .team-grid,
-        .office-grid {
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
         }
 
         .service-card {
             background: #ffffff;
-            padding: 4rem 2rem;
-            border-radius: 40px;
-            border: none;
-            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-            text-align: center;
-            overflow: visible;
-            /* To allow blob overflow if needed */
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            border: 1.5px solid #f5edf8;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
             position: relative;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
         }
 
         .service-icon-wrapper {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 2.5rem;
+            width: 56px;
+            height: 56px;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .service-icon-blob {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fdf2f8;
-            /* Soft pink/creme */
-            border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-            animation: blob-morph 8s linear infinite;
-            transition: all 0.5s ease;
-            z-index: 1;
-        }
-
-        @keyframes blob-morph {
-
-            0%,
-            100% {
-                border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-            }
-
-            25% {
-                border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
-            }
-
-            50% {
-                border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%;
-            }
-
-            75% {
-                border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
-            }
+            background: #fde8f4;
+            border-radius: 16px;
+            flex-shrink: 0;
         }
 
         .service-card i {
-            position: relative;
-            z-index: 2;
-            font-size: 2.2rem;
-            color: var(--primary);
-            transition: all 0.5s ease;
+            font-size: 1.5rem;
+            color: var(--secondary);
         }
 
         .service-card h3 {
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             color: var(--primary);
-            margin-bottom: 1.2rem;
-            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.8rem;
+            font-family: var(--font-body);
             font-weight: 700;
-            letter-spacing: -0.02em;
+            line-height: 1.3;
         }
 
         .service-card p {
-            font-size: 1rem;
+            font-size: 0.92rem;
             color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
-            padding: 0 1rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+            padding: 0;
         }
 
-        .service-card .read-more {
+        .service-focus-label {
+            font-size: 0.78rem;
+            font-weight: 700;
             color: var(--secondary);
-            font-size: 0.9rem;
-            font-weight: 600;
-            justify-content: center;
-            letter-spacing: 0.05em;
-            transition: all 0.4s ease;
+            margin-bottom: 4px;
+        }
+
+        .service-focus-areas {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         .service-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(145, 95, 120, 0.1);
-            background: #fffcfd;
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(145, 95, 120, 0.10);
         }
 
         .service-card:hover .service-icon-blob {
@@ -1326,92 +1290,92 @@ try {
                 <!-- Bireysel Terapi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon-blob"></div>
                         <i class="fas fa-user-heart"></i>
                     </div>
                     <h3>Bireysel Terapi</h3>
                     <p>Kendinizi anlama ve hayat kalitenizi artırma yolculuğunda yanınızdayız.</p>
-                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                    <div class="service-focus-label">Odak Alanları:</div>
+                    <div class="service-focus-areas">Depresyon, Kaygı Bozuklukları, Travma</div>
                 </div>
                 <!-- Aile ve Çift Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon-blob" style="animation-delay: -2s;"></div>
                         <i class="fas fa-hand-holding-heart"></i>
                     </div>
                     <h3>Aile ve Çift Terapisi</h3>
                     <p>İlişkilerinizde daha sağlıklı iletişim ve güçlü bağlar kurmanız için yanınızdayız.</p>
-                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                    <div class="service-focus-label">Odak Alanları:</div>
+                    <div class="service-focus-areas">Aile İçi Çatışmalar, İletişim Sorunları, Boşanma Süreci</div>
                 </div>
                 <!-- Oyun Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon-blob" style="animation-delay: -4s;"></div>
                         <i class="fas fa-shapes"></i>
                     </div>
                     <h3>Oyun Terapisi</h3>
                     <p>Çocukların kendilerini ifade etme dili olan oyun ile duygusal iyileşme sağlıyoruz.</p>
-                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                    <div class="service-focus-label">Odak Alanları:</div>
+                    <div class="service-focus-areas">Davranış Sorunları, Ayrılık Kaygısı, Yas</div>
                 </div>
                 <!-- Yetişkin Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon-blob" style="animation-delay: -1s;"></div>
                         <i class="fas fa-user-tie"></i>
                     </div>
                     <h3>Yetişkin Terapisi</h3>
                     <p>Yetişkinlik döneminin getirdiği zorluklarla başa çıkmak için profesyonel destek.</p>
-                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                    <div class="service-focus-label">Odak Alanları:</div>
+                    <div class="service-focus-areas">Sınav Kaygısı, Özgüven, Kariyer Stresi</div>
                 </div>
                 <!-- Çocuk Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon-blob" style="animation-delay: -3s;"></div>
                         <i class="fas fa-child-reaching"></i>
                     </div>
                     <h3>Çocuk Terapisi</h3>
                     <p>Çocukların gelişimsel süreçlerinde karşılaştıkları güçlükleri birlikte aşıyoruz.</p>
-                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                    <div class="service-focus-label">Odak Alanları:</div>
+                    <div class="service-focus-areas">Dikkat Dağınıklığı, Uyum Sorunları, Korku ve Fobiler</div>
                 </div>
                 <!-- Ebeveyn Danışmanlığı -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon-blob" style="animation-delay: -5s;"></div>
                         <i class="fas fa-hands-holding-child"></i>
                     </div>
                     <h3>Ebeveyn Danışmanlığı</h3>
                     <p>Ebeveynlik yolculuğunda karşılaşılan sorulara bilimsel cevaplar ve rehberlik.</p>
-                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                    <div class="service-focus-label">Odak Alanları:</div>
+                    <div class="service-focus-areas">Sınır Koyma, Bağlanma Stilleri, Ergenlik Dönemi</div>
                 </div>
                 <!-- Bilişsel Davranışçı Terapi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon-blob" style="animation-delay: -2.5s;"></div>
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Bilişsel Davranışçı Terapi</h3>
+                    <h3>Bilişsel Davranışçı Terapi (BDT)</h3>
                     <p>Düşünce ve davranış kalıplarını değiştirerek kalıcı iyileşmeyi hedefleyen yöntem.</p>
-                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                    <div class="service-focus-label">Odak Alanları:</div>
+                    <div class="service-focus-areas">Fobiler, OKB, Panik Bozukluğu</div>
                 </div>
                 <!-- Masal Terapisi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon-blob" style="animation-delay: -4.5s;"></div>
                         <i class="fas fa-wand-magic-sparkles"></i>
                     </div>
                     <h3>Masal Terapisi</h3>
                     <p>Masalların iyileştirici gücü ile çocukların iç dünyasına sembolik yolculuklar.</p>
-                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                    <div class="service-focus-label">Odak Alanları:</div>
+                    <div class="service-focus-areas">Çocuk Terapisi, Yaratıcı Anlatım, Duygusal Farkındalık</div>
                 </div>
                 <!-- Şema Terapi -->
                 <div class="service-card">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon-blob" style="animation-delay: -1.5s;"></div>
                         <i class="fas fa-seedling"></i>
                     </div>
                     <h3>Şema Terapi</h3>
-                    <p>Kökü çocukluğa dayanan olumsuz yaşam kalıplarını (şemaları) fark etme ve değiştirme.</p>
-                    <a href="#contact" class="read-more">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                    <p>Kökü çocukluğa dayanan olumsuz yaşam kalıplarını fark etme ve dönüştürme.</p>
+                    <div class="service-focus-label">Odak Alanları:</div>
+                    <div class="service-focus-areas">Kişilik Bozuklukları, Kronik Depresyon, Bağımlı İlişkiler</div>
                 </div>
             </div>
         </div>
