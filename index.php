@@ -429,6 +429,29 @@ try {
                 display: block;
             }
 
+            /* Critical Inlined Styles */
+            .btn-premium {
+                display: inline-block;
+                padding: 1.25rem 3rem;
+                background: var(--grad-corporate);
+                color: var(--white);
+                text-decoration: none;
+                border-radius: 50px;
+                font-weight: 700;
+                font-size: 1rem;
+                transition: var(--transition);
+                box-shadow: 0 15px 35px rgba(157, 23, 77, 0.25);
+                border: none;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .btn-premium:hover {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 25px 50px rgba(157, 23, 77, 0.4);
+                filter: brightness(1.1);
+            }
+
             .hero-ps-text {
                 font-size: 1.4rem !important;
                 margin-bottom: 1.5rem !important;
@@ -858,7 +881,8 @@ try {
                             <div class="blog-img-container">
                                 <?php if (!empty($post['image'])): ?>
                                     <img src="<?php echo webp_url($post['image']); ?>"
-                                        alt="<?php echo htmlspecialchars($post['title']); ?>">
+                                        alt="<?php echo htmlspecialchars($post['title']); ?>" width="400" height="250"
+                                        loading="lazy">
                                 <?php else: ?>
                                     <i class="fas fa-newspaper fa-3x"></i>
                                 <?php endif; ?>
