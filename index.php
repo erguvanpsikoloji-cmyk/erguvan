@@ -371,22 +371,20 @@ try {
             left: 0;
             width: 100%;
             z-index: 10000;
-            height: 90px !important;
+            height: 80px !important;
+            /* Reduced for a more compact look */
             background: var(--glass);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(157, 23, 77, 0.05);
-            /* Lighter border */
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            /* Premium shadow */
             transition: var(--transition);
             padding: 0;
-            /* Remove default padding to allow container to handle centering */
             display: flex;
             align-items: center;
         }
 
         .navbar.scrolled {
-            height: 90px !important;
+            height: 80px !important;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
@@ -394,14 +392,15 @@ try {
             display: flex !important;
             align-items: center !important;
             text-decoration: none !important;
-            gap: 1.2rem;
+            gap: 1rem;
+            /* Balanced gap */
         }
 
         .navbar .logo img {
-            height: 60px !important;
-            max-height: 60px !important;
+            height: 52px !important;
+            /* Slightly smaller for elegance */
+            max-height: 52px !important;
             width: auto !important;
-            /* Fixed width based on 124/130 ratio */
             object-fit: contain;
             mix-blend-mode: multiply;
             aspect-ratio: 124 / 130;
@@ -416,10 +415,12 @@ try {
 
         .logo-title {
             font-family: var(--font-heading);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
+            /* Refined size for balance */
             color: var(--primary);
             letter-spacing: -0.5px;
-            font-weight: 400;
+            font-weight: 500;
+            /* Slightly more defined */
         }
 
         .logo-subtitle {
