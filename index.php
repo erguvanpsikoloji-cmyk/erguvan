@@ -41,9 +41,9 @@ try {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts - Asynchronous with display=optional for zero CLS -->
+    <!-- Google Fonts - Render-blocking to prevent massive CLS (FOIT/FOUT) -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Prata&display=optional"
-        rel="stylesheet" media="print" onload="this.media='all'">
+        rel="stylesheet">
 
     <!-- Google Fonts Preload - Faster FCP without CLS penalties -->
     <link rel="preload" as="font" href="https://fonts.gstatic.com/s/prata/v20/82bm8mi0QvL_AaB2.woff2" type="font/woff2"
@@ -51,10 +51,11 @@ try {
     <link rel="preload" as="font" href="https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2"
         type="font/woff2" crossorigin>
 
-    <!-- Hero Image Responsive Preload - Critical for LCP -->
+    <!-- Hero Image Responsive Preload - Split for accurate LCP Discovery -->
+    <link rel="preload" as="image" href="<?php echo webp_url('assets/images/hero-psikolojik-destek-mobile.webp'); ?>"
+        media="(max-width: 600px)" fetchpriority="high">
     <link rel="preload" as="image" href="<?php echo webp_url('assets/images/hero-psikolojik-destek-opt.webp'); ?>"
-        imagesrcset="<?php echo webp_url('assets/images/hero-psikolojik-destek-mobile.webp'); ?> 600w, <?php echo webp_url('assets/images/hero-psikolojik-destek-opt.webp'); ?> 1024w"
-        imagesizes="100vw" fetchpriority="high">
+        media="(min-width: 601px)" fetchpriority="high">
 
     <!-- Swiper CSS - Deferred -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" media="print"
@@ -441,8 +442,6 @@ try {
             .hero-desc-text {
                 font-size: 1.1rem !important;
                 margin-bottom: 2rem !important;
-                min-height: 120px;
-                /* Space for desc text */
                 display: block;
                 line-height: 1.5 !important;
             }
