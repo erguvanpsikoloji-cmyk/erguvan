@@ -391,15 +391,16 @@ try {
         }
 
         .navbar .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
+            display: flex !important;
+            align-items: center !important;
+            text-decoration: none !important;
+            gap: 1.2rem;
         }
 
         .navbar .logo img {
             height: 60px !important;
             max-height: 60px !important;
-            width: 57px !important;
+            width: auto !important;
             /* Fixed width based on 124/130 ratio */
             object-fit: contain;
             mix-blend-mode: multiply;
@@ -409,10 +410,8 @@ try {
         .logo-text {
             display: flex;
             flex-direction: column;
-            margin-left: 1.2rem;
-            line-height: 1;
-            min-width: 200px;
-            /* Pre-reserve width for Title/Subtitle */
+            line-height: 1.1;
+            min-width: 180px;
         }
 
         .logo-title {
@@ -828,7 +827,6 @@ try {
         </ul>
         <a href="tel:+905511765285" class="btn-premium head-cta"
             style="padding: 0.8rem 1.5rem; font-size: 0.9rem; margin-left: 20px;">Hemen Ara</a>
-    </div>
     </div>
     </nav>
     <!-- Hero Section -->
