@@ -1,4 +1,7 @@
 <?php
+// Encoding Fix: Force UTF-8
+header('Content-Type: text/html; charset=utf-8');
+
 // Config dosyasını yükle
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/seo-helper.php';

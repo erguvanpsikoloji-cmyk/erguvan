@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Premium Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Prata&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --footer-bg-start: #0F172A;
+            --footer-bg-end: #2D1B24;
+            --text-off-white: rgba(255, 255, 255, 0.8);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --accent: #915F78;
+            --font-heading: 'Prata', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f8f9fa;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--footer-bg-start) 0%, var(--footer-bg-end) 100%);
+            color: white;
+            padding: 8rem 0 3rem;
+            font-family: var(--font-body);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 6rem;
+        }
+
+        .footer-brand .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            text-decoration: none;
+        }
+
+        .footer-brand .logo-icon {
+            width: 48px;
+            height: 48px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .footer-brand .logo-title {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-brand .logo-subtitle {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .brand-desc {
+            color: var(--text-off-white);
+            line-height: 1.9;
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .footer-social a {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer h4 {
+            color: white;
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .footer h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 25px;
+            height: 1px;
+            background: var(--accent);
+            opacity: 0.6;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer ul li {
+            margin-bottom: 1.2rem;
+        }
+
+        .footer ul li a {
+            color: var(--text-off-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .footer ul li a:hover {
+            color: white;
+        }
+
+        .footer ul li a:hover::after {
+            width: 100%;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-off-white);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-contact i {
+            color: var(--accent);
+            font-size: 0.9rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 6rem;
+            padding-top: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin: 0;
+            letter-spacing: 0.02em;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: white;
+        }
+
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                padding: 5rem 0 3rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 3.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+                margin-top: 4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Section -->
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <img src="assets/images/logo_icon.png" alt="Logo" class="logo-icon">
+                        <div class="logo-text">
+                            <span class="logo-title">Erguvan Psikoloji</span>
+                            <span class="logo-subtitle">Uzman Klinik Psikolog Desteği</span>
+                        </div>
+                    </a>
+                    <p class="brand-desc">
+                        Akademik temelli, etik ve profesyonel psikolojik danışmanlık hizmetleri ile yanınızdayız. Modern
+                        bilimin ışığında, rafine bir yaklaşımla profesyonel destek sunuyoruz.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Menu -->
+                <div class="footer-nav">
+                    <h4>Hızlı Menü</h4>
+                    <ul>
+                        <li><a href="#">Ana Sayfa</a></li>
+                        <li><a href="#">Hizmetlerimiz</a></li>
+                        <li><a href="#">Blog Yazıları</a></li>
+                        <li><a href="#">İletişim Paneli</a></li>
+                    </ul>
+                </div>
+
+                <!-- Specializations -->
+                <div class="footer-services">
+                    <h4>Uzmanlıklar</h4>
+                    <ul>
+                        <li><a href="#">Bireysel Terapi</a></li>
+                        <li><a href="#">Çift Terapisi</a></li>
+                        <li><a href="#">Çocuk ve Ergen</a></li>
+                        <li><a href="#">Online Seanslar</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="footer-contact">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><i class="fas fa-phone-alt"></i> <span>0551 176 52 85</span></li>
+                        <li><i class="fas fa-envelope"></i> <span>info@erguvanpsikoloji.com</span></li>
+                        <li><i class="fas fa-map-marker-alt"></i> <span>Şehremini, Millet Cd. 34098
+                                Fatih/İstanbul</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Area -->
+            <div class="footer-bottom">
+                <p>&copy; 2026 Erguvan Psikoloji. Tüm hakları saklıdır.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Kullanım Koşulları</a>
+                    <a href="#">KVKK Aydınlatma Metni</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -59,7 +59,7 @@ $categories = array_unique(array_column($all_posts, 'category'));
 <section class="blog-section section">
     <div class="container">
         <div class="blog-filter">
-            <button class="filter-btn active" data-category="all">Tümü</button>
+            <button class="filter-btn active" data-category="all">T&uuml;m&uuml;</button>
             <?php foreach ($categories as $category): ?>
                 <button class="filter-btn"
                     data-category="<?php echo strtolower($category); ?>"><?php echo $category; ?></button>
@@ -96,7 +96,7 @@ $categories = array_unique(array_column($all_posts, 'category'));
                             <h3 class="blog-card-title"><?php echo htmlspecialchars($post['title']); ?></h3>
                             <p class="blog-card-excerpt"><?php echo htmlspecialchars($post['excerpt']); ?></p>
                             <a href="<?php echo url('blog/' . $post['slug']); ?>" class="btn-randevu"
-                                style="display:inline-block; margin-top:10px;">Devamını Oku</a>
+                                style="display:inline-block; margin-top:10px;">Devam&#305;n&#305; Oku</a>
                         </div>
                     </article>
                 <?php endforeach; ?>

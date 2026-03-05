@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Buton Tasarım Önizlemesi — Erguvan Psikoloji</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #FAF5FF 0%, #FFFFFF 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px 120px;
+            gap: 60px;
+        }
+
+        h1 {
+            color: #0F172A;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .section {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .section h2 {
+            color: #915F78;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .section p {
+            color: #64748b;
+            font-size: 0.82rem;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .preview-box {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            min-height: 180px;
+            box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .mock-page {
+            position: absolute;
+            left: 40px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .divider {
+            width: 100%;
+            max-width: 800px;
+            border: none;
+            border-top: 1px solid #f1e8f5;
+        }
+
+        /* ================================================
+     SEÇENEk A: İKİ AYRI BUTON — ERGUVAN TONLARI
+  ================================================ */
+        .floating-a {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .float-btn-a {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s cubic-bezier(.23, 1, .32, 1), box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .float-btn-a.wa {
+            background: linear-gradient(135deg, #915F78 0%, #70475E 100%);
+            box-shadow: 0 4px 18px rgba(145, 95, 120, 0.30);
+        }
+
+        .float-btn-a.ph {
+            background: #0F172A;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+        }
+
+        .float-btn-a:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(145, 95, 120, 0.35);
+        }
+
+        /* ================================================
+     SEÇENEk B: TEK "İLETİŞİM" BUTONU — GENIŞLEYEN MENÜ
+  ================================================ */
+        .floating-b {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .contact-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s cubic-bezier(.23, 1, .32, 1), opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .contact-options.open {
+            max-height: 200px;
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border-radius: 50px;
+            padding: 10px 16px;
+            text-decoration: none;
+            color: #0F172A;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.10);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1.5px solid #f1e8f5;
+            white-space: nowrap;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(145, 95, 120, 0.18);
+        }
+
+        .option-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .option-icon.wa {
+            background: linear-gradient(135deg, #915F78 0%, #70475E 100%);
+            color: white;
+        }
+
+        .option-icon.ph {
+            background: #0F172A;
+            color: white;
+        }
+
+        .main-contact-btn {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #915F78 0%, #70475E 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 18px rgba(145, 95, 120, 0.30);
+            cursor: pointer;
+            border: none;
+            transition: transform 0.3s cubic-bezier(.23, 1, .32, 1), box-shadow 0.3s, border-radius 0.3s;
+        }
+
+        .main-contact-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(145, 95, 120, 0.35);
+        }
+
+        .main-contact-btn.active {
+            border-radius: 50%;
+            background: #0F172A;
+        }
+
+        /* Labels */
+        .label-tag {
+            display: inline-block;
+            background: #f1e8f5;
+            color: #915F78;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <h1>Floating Buton Tasarım Önizlemesi</h1>
+        <p class="subtitle">Erguvan Psikoloji — Marka Renk Paleti ile Premium Floating Aksiyonlar</p>
+    </div>
+
+    <!-- SEÇENEk A -->
+    <div class="section">
+        <span class="label-tag">Seçenek A</span>
+        <h2>İki Ayrı Buton — Erguvan Tonları</h2>
+        <p>
+            İki buton da aynı boyut (54×54px), aynı border-radius (16px) ve aynı gölge sistemine sahip.
+            WhatsApp yeşili kaldırıldı, erguvan gradyanı kullanıldı. Hover'da hafif yukarı kalkma ve gölge artışı var.
+            Glow efekti yok; soft, premium shadow sistemi uygulandı.
+        </p>
+        <div class="preview-box">
+            <div class="mock-page">← Sayfa içeriği</div>
+            <div class="floating-a">
+                <a class="float-btn-a wa" title="WhatsApp">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24"
+                        fill="currentColor">
+                        <path
+                            d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-4-10.5-6.7z" />
+                    </svg>
+                </a>
+                <a class="float-btn-a ph" title="Ara">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="22" height="22"
+                        fill="currentColor">
+                        <path
+                            d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.9-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.9 464-464 0-11.2-7.7-20.9-18.6-23.4z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- SEÇENEk B -->
+    <div class="section">
+        <span class="label-tag">Seçenek B — Önerilen ✦</span>
+        <h2>Tek "İletişim" Butonu — Genişleyen Menü</h2>
+        <p>
+            Tek bir butondan oluşuyor. Tıklayınca WhatsApp ve Arama seçenekleri pill-shaped kartlar şeklinde yukarı
+            açılıyor.
+            Ekran daha temiz ve minimal görünüyor. Marka rengi kullanıldı, glow yok.
+            <strong>İkona tıklayarak önizleyebilirsiniz.</strong>
+        </p>
+        <div class="preview-box">
+            <div class="mock-page">← Sayfa içeriği</div>
+            <div class="floating-b">
+                <div class="contact-options" id="contactOptions">
+                    <a href="#" class="option-btn">
+                        <span class="option-icon wa">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16"
+                                fill="currentColor">
+                                <path
+                                    d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-4-10.5-6.7z" />
+                            </svg>
+                        </span>
+                        WhatsApp ile Yaz
+                    </a>
+                    <a href="#" class="option-btn">
+                        <span class="option-icon ph">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="14" height="14"
+                                fill="currentColor">
+                                <path
+                                    d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.9-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.9 464-464 0-11.2-7.7-20.9-18.6-23.4z" />
+                            </svg>
+                        </span>
+                        Bizi Arayın
+                    </a>
+                </div>
+                <button class="main-contact-btn" id="contactToggle" title="İletişim">
+                    <svg id="iconContact" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="22"
+                        height="22" fill="currentColor">
+                        <path
+                            d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24l0 112 80 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-136c0-13.3 10.7-24 24-24z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="background: #f1e8f5; border-radius: 20px; padding: 24px 28px;">
+        <h2 style="color:#0F172A; font-size:0.9rem;">Hangi Seçeneği Onaylıyorsunuz?</h2>
+        <p style="margin:0; margin-top:4px;">
+            <strong>Seçenek A:</strong> İki ayrı buton, marka renkleriyle, tek bakışta WhatsApp/Arama netliği.<br>
+            <strong>Seçenek B:</strong> Tek minimal buton, açılınca seçenekler görünür. Daha temiz ve modern.
+        </p>
+    </div>
+
+    <script>
+        const toggle = document.getElementById('contactToggle');
+        const options = document.getElementById('contactOptions');
+        const icon = document.getElementById('iconContact');
+
+        const phoneIcon = `<path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.9-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.9 464-464 0-11.2-7.7-20.9-18.6-23.4z"/>`;
+        const closeIcon = `<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm-81-337c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>`;
+
+        toggle.addEventListener('click', () => {
+            const isOpen = options.classList.toggle('open');
+            toggle.classList.toggle('active', isOpen);
+            icon.innerHTML = isOpen ? closeIcon : phoneIcon;
+        });
+    </script>
+</body>
+
+</html>

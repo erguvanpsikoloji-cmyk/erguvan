@@ -25,7 +25,7 @@ if (strpos($dir, $doc_root) !== 0) {
 }
 
 // Versiyon - Cache temizleme ve asset güncellemeleri için
-define('VERSION', 'v41');
+define('VERSION', 'v44');
 
 // Google Maps API Key
 define('GOOGLE_MAPS_API_KEY', 'AIzaSyA_BZgHTkpStO80rI3Ksbd9Dj_bF7P1CxE');
@@ -150,61 +150,47 @@ function webp_url($path, $variant = '')
     if (strpos($path, 'http') === 0)
         return $path;
 
-    // Sorgu parametrelerini (query string) temizle, ama URL'de korumak için sakla
+    static $webp_cache = [];
+    $cacheKey = $path . '_' . $variant;
+    if (isset($webp_cache[$cacheKey]))
+        return $webp_cache[$cacheKey];
+
+    // Clean path
     $cleanPath = ltrim($path, '/\\');
     $parts = explode('?', $cleanPath);
     $pathWithoutQuery = $parts[0];
-    $queryString = isset($parts[1]) ? '?' . $parts[1] : '';
-
     $extension = pathinfo($pathWithoutQuery, PATHINFO_EXTENSION);
-    if (empty($extension))
-        return url($cleanPath);
-
     $basePath = substr($pathWithoutQuery, 0, -(strlen($extension) + 1));
-    if ($variant === 'mobile') {
-        $webpPath = $basePath . '_mobile.webp';
-    } else {
-        $webpPath = $basePath . '.webp';
-    }
-
     $v = (defined('VERSION') ? VERSION : '1');
 
-    // Senaryo 1: Verilen yol doğrudan kök dizinde mi?
-    $fullWebpPath = __DIR__ . '/' . $webpPath;
-    if (file_exists($fullWebpPath) && filesize($fullWebpPath) > 0) {
-        return url($webpPath) . '?v=' . $v;
+    // Determing WebP Path
+    $webpRelative = ($variant === 'mobile') ? ($basePath . '_mobile.webp') : ($basePath . '.webp');
+    if ($variant === 'mobile' && strpos($basePath, '-mobile') === false && strpos($basePath, '_mobile') === false) {
+        // Special case for mobile variant handling if path doesn't already have mobile suffix
+        $webpRelative = $basePath . '-mobile.webp';
     }
 
-    // Senaryo 2: Verilen yol assets/ altında mı?
-    if (strpos($pathWithoutQuery, 'assets/') !== 0) {
-        $fullAssetsWebpPath = __DIR__ . '/assets/' . $webpPath;
-        if (file_exists($fullAssetsWebpPath) && filesize($fullAssetsWebpPath) > 0) {
-            return url('assets/' . $webpPath) . '?v=' . $v;
+    // Check availability
+    $checkPaths = [
+        __DIR__ . '/' . $webpRelative,
+        __DIR__ . '/assets/' . $webpRelative,
+        __DIR__ . '/' . $pathWithoutQuery,
+        __DIR__ . '/assets/' . $pathWithoutQuery
+    ];
+
+    foreach ($checkPaths as $p) {
+        if (file_exists($p) && filesize($p) > 0) {
+            // Find the relative path from the checkPath
+            $finalPath = (strpos($p, '/assets/') !== false) ? ('assets/' . ltrim(str_replace(__DIR__ . '/assets/', '', $p), '/')) : ltrim(str_replace(__DIR__, '', $p), '/');
+            $res = url($finalPath) . '?v=' . $v;
+            $webp_cache[$cacheKey] = $res;
+            return $res;
         }
     }
 
-    // Eğer mobile istendi ama bulunamadıysa normal webp dene
-    if ($variant === 'mobile') {
-        return webp_url($path);
-    }
-
-    // WebP bulunamadı veya bozuk (0 byte), orijinal dosyayı döndür
-    // Orijinal dosya kökte mi? (Sorgu parametresiz kontrol et!)
-    $fullOriginalPath = __DIR__ . '/' . $pathWithoutQuery;
-    if (file_exists($fullOriginalPath) && filesize($fullOriginalPath) > 0) {
-        return url($pathWithoutQuery) . '?v=' . $v;
-    }
-
-    // Orijinal dosya assets/ altında mı?
-    if (strpos($pathWithoutQuery, 'assets/') !== 0) {
-        $fullAssetsOriginalPath = __DIR__ . '/assets/' . $pathWithoutQuery;
-        if (file_exists($fullAssetsOriginalPath) && filesize($fullAssetsOriginalPath) > 0) {
-            return url('assets/' . $pathWithoutQuery) . '?v=' . $v;
-        }
-    }
-
-    // Hiçbiri değilse güvenli liman: orijinal temiz yolu dön
-    return url($pathWithoutQuery) . '?v=' . $v;
+    $res = url($cleanPath) . '?v=' . $v;
+    $webp_cache[$cacheKey] = $res;
+    return $res;
 }
 
 /**
