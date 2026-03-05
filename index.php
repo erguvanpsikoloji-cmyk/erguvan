@@ -41,11 +41,15 @@ try {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts - Using swap for better FCP while pre-reserving space for zero CLS -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Prata&display=swap"
-        rel="stylesheet">
+    <!-- Google Fonts - Asynchronous with display=optional for zero CLS -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Prata&display=optional"
+        rel="stylesheet" media="print" onload="this.media='all'">
 
-    <!-- Google Fonts Preload removed to avoid fragile hardcoded URLs; swap is already enabled -->
+    <!-- Google Fonts Preload - Faster FCP without CLS penalties -->
+    <link rel="preload" as="font" href="https://fonts.gstatic.com/s/prata/v20/82bm8mi0QvL_AaB2.woff2" type="font/woff2"
+        crossorigin>
+    <link rel="preload" as="font" href="https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2"
+        type="font/woff2" crossorigin>
 
     <!-- Hero Image Responsive Preload - Critical for LCP -->
     <link rel="preload" as="image" href="<?php echo webp_url('assets/images/hero-psikolojik-destek-opt.webp'); ?>"
@@ -128,16 +132,12 @@ try {
             width: 100%;
             z-index: 10000;
             height: 90px !important;
-            min-height: 90px !important;
-            /* Strict reservation */
             display: flex;
             align-items: center;
             background: var(--glass);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(157, 23, 77, 0.1);
             transition: var(--transition);
-            contain: size layout;
-            /* Performance hint */
         }
 
         .navbar.scrolled {
@@ -331,8 +331,6 @@ try {
             margin-bottom: 2.5rem;
             max-width: 500px;
             line-height: 1.6;
-            min-height: 50px;
-            /* Reserve space */
         }
 
         .hero-subtitle i {
