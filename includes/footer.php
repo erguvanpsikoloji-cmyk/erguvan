@@ -110,7 +110,7 @@
 
 
 <!-- Assets & Contact Scripts remain same -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
 <script src="<?php echo asset_url('js/script.js'); ?>" defer></script>
 
 <div class="floating-contact">
