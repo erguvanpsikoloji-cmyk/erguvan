@@ -442,7 +442,7 @@ try {
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 28px;
             list-style: none;
             align-items: center;
             flex-shrink: 1;
@@ -453,6 +453,8 @@ try {
             color: var(--primary);
             font-weight: 600;
             font-size: 17px;
+            padding: 8px 12px;
+            white-space: nowrap;
             transition: var(--transition);
             position: relative;
         }
