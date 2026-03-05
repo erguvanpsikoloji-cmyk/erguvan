@@ -372,8 +372,6 @@ try {
             width: 100%;
             z-index: 10000;
             height: 90px !important;
-            display: flex;
-            align-items: center;
             background: var(--glass);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(157, 23, 77, 0.05);
@@ -381,6 +379,10 @@ try {
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             /* Premium shadow */
             transition: var(--transition);
+            padding: 0;
+            /* Remove default padding to allow container to handle centering */
+            display: flex;
+            align-items: center;
         }
 
         .navbar.scrolled {
@@ -432,15 +434,19 @@ try {
         }
 
         .nav-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: nowrap;
         }
 
         .logo {
             flex-shrink: 0;
-            margin-right: 2rem;
+            margin-right: 0;
+            /* Managed by justify-content */
         }
 
         .nav-links {
@@ -796,7 +802,7 @@ try {
 <body>
     <!-- Content Started (JS deferred at bottom) -->
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <div class="nav-container">
         <a href="#" class="logo"><img src="<?php echo webp_url('assets/images/logo_icon.png'); ?>"
                 alt="Erguvan Psikoloji Logo" width="124" height="130">
             <div class="logo-text"><span class="logo-title">Erguvan Psikoloji</span><span class="logo-subtitle">Uzman
@@ -819,9 +825,11 @@ try {
                     176 52 85 </a></li>
             <li class="mobile-only"><a href="tel:+905511765285" class="btn-premium"
                     style="padding: 1rem 2rem; width: 100%; text-align: center;">Hemen Ara</a></li>
-        </ul><a href="tel:+905511765285" class="btn-premium head-cta"
-            style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">Hemen Ara</a>
-        </div>
+        </ul>
+        <a href="tel:+905511765285" class="btn-premium head-cta"
+            style="padding: 0.8rem 1.5rem; font-size: 0.9rem; margin-left: 20px;">Hemen Ara</a>
+    </div>
+    </div>
     </nav>
     <!-- Hero Section -->
     <header class="hero" id="home">
