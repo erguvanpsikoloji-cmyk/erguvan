@@ -376,7 +376,10 @@ try {
             align-items: center;
             background: var(--glass);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(157, 23, 77, 0.1);
+            border-bottom: 1px solid rgba(157, 23, 77, 0.05);
+            /* Lighter border */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            /* Premium shadow */
             transition: var(--transition);
         }
 
@@ -442,7 +445,8 @@ try {
 
         .nav-links {
             display: flex;
-            gap: 28px;
+            gap: 32px;
+            /* Increased gap */
             list-style: none;
             align-items: center;
             flex-shrink: 1;
@@ -451,9 +455,12 @@ try {
         .nav-links a {
             text-decoration: none;
             color: var(--primary);
-            font-weight: 600;
-            font-size: 17px;
-            padding: 8px 12px;
+            font-weight: 500;
+            /* Modern lighter weight */
+            font-size: 16px;
+            /* Slightly refined size */
+            padding: 8px 4px;
+            /* Vertical padding only, gap handles horizontal */
             white-space: nowrap;
             transition: var(--transition);
             position: relative;
@@ -586,15 +593,18 @@ try {
 
         .btn-premium {
             display: inline-block;
-            padding: 1.25rem 3rem;
+            padding: 12px 26px;
+            /* Optimized padding */
             background: var(--grad-corporate);
             color: var(--white);
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 30px;
+            /* More rounded premium feel */
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: var(--transition);
-            box-shadow: 0 15px 35px rgba(157, 23, 77, 0.25);
+            box-shadow: 0 6px 18px rgba(145, 95, 120, 0.25);
+            /* Refined shadow */
             border: none;
             text-transform: uppercase;
             letter-spacing: 1px;
