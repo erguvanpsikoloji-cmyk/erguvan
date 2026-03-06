@@ -637,32 +637,31 @@ try {
         /* Media Queries - Critical */
         @media (max-width: 900px) {
             .navbar {
-                padding: 1rem 1.5rem !important;
+                padding: 0 1rem !important;
                 height: 80px !important;
                 min-height: 80px !important;
-                /* Strictly fixed height for navbar on mobile to avoid CLS */
             }
 
             .navbar .logo img {
-                height: 50px !important;
-                max-height: 50px !important;
-                width: 48px !important;
-                /* Fixed width for 124/130 ratio to avoid CLS */
+                height: 48px !important;
+                /* Slightly smaller for mobile */
+                max-height: 48px !important;
+                width: auto !important;
                 object-fit: contain;
             }
 
             .logo-title {
-                font-size: 1.3rem !important;
+                font-size: 1.2rem !important;
+            }
+
+            .logo-subtitle {
+                font-size: 0.65rem !important;
             }
 
             .logo-text {
-                min-width: 180px !important;
-                height: auto;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: flex-start;
-                margin-left: 0.8rem !important;
+                min-width: 150px !important;
+                margin-left: 0.5rem !important;
+                line-height: 1;
             }
 
             .hero {
