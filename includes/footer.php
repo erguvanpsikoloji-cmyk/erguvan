@@ -9,7 +9,7 @@
             <!-- Brand Section -->
             <div class="footer-brand">
                 <a href="<?php echo url(); ?>" class="footer-logo">
-                    <img src="<?php echo asset_url('images/logo_icon.webp'); ?>" alt="Erguvan Psikoloji"
+                    <img src="assets/images/logo_icon.png?v=<?php echo VERSION; ?>" alt="Erguvan Psikoloji"
                         class="logo-icon">
                     <div class="logo-text">
                         <span class="logo-title">Erguvan Psikoloji</span>

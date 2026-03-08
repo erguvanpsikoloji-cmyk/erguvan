@@ -145,14 +145,17 @@
 }
 
 .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 40px;
     position: relative;
     z-index: 1;
 }
 
 .premium-team-card {
+    flex: 1 1 320px;
+    max-width: 400px;
     background: rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -931,7 +934,9 @@
     body {
         overflow-x: hidden;
     }
-}/* Footer Styles Consolidated v24 */
+}
+
+/* Footer Styles Consolidated v24 */
 .footer {
     background: linear-gradient(135deg, #0F172A 0%, #2D1B24 100%);
     color: white;

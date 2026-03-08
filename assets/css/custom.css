@@ -82,11 +82,12 @@ h3 {
 }
 
 .navbar .logo img {
-    height: 70px !important;
-    max-height: 70px !important;
+    height: 60px !important;
+    max-height: 60px !important;
+    min-height: 60px !important;
+    /* Fixed height for all screens */
     width: auto !important;
     object-fit: contain;
-    mix-blend-mode: multiply;
 }
 
 .nav-container {
@@ -125,7 +126,7 @@ h3 {
 .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: 0px;
     left: 0;
     width: 0;
     height: 2px;
