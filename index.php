@@ -24,6 +24,42 @@ try {
 } catch (Exception $e) {
     error_log("Anasayfa blog hatası: " . $e->getMessage());
 }
+
+// Orijinal Danışan Yorumları (v76)
+$testimonials = [
+    [
+        'name' => 'Nihat Duman',
+        'comment' => 'Sena Hanım\'a tavsiye üzerine gittim ilgi ve alakası çok iyi. Gerçek bir psikolog arıyorsanız doğru adrestesiniz',
+        'rating' => 5,
+        'source' => 'Google',
+        'date_info' => 'Bir ay önce',
+        'avatar_char' => 'N'
+    ],
+    [
+        'name' => 'Ayşe Yılmaz',
+        'comment' => 'Sena Hanım\'ı kesinlikle tavsiye ederim. Çok anlayışlı ve profesyonel. Online terapi seansları çok verimli geçti.',
+        'rating' => 5,
+        'source' => 'Google',
+        'date_info' => '3 ay önce',
+        'avatar_char' => 'A'
+    ],
+    [
+        'name' => 'A. Kaya',
+        'comment' => 'Hayatımın en zor döneminde Sena hanım ile tanıştım. Profesyonel ve samimi yaklaşımı sayesinde kendimi yeniden buldum.',
+        'rating' => 5,
+        'source' => 'Google',
+        'date_info' => '2 ay önce',
+        'avatar_char' => 'A'
+    ],
+    [
+        'name' => 'M. Yılmaz',
+        'comment' => 'Ferah ofis ortamı ve güven veren duruşuyla terapi sürecim çok verimli geçti. Herkese tavsiye ediyorum.',
+        'rating' => 5,
+        'source' => 'Google',
+        'date_info' => '4 ay önce',
+        'avatar_char' => 'M'
+    ]
+];
 ?>
 <!DOCTYPE html>
 <html lang="tr">
@@ -850,42 +886,19 @@ try {
                 <div style="margin-bottom: 1.5rem;"></div>
                 <p>Yolculuğumuza eşlik edenlerin deneyimleri.</p>
             </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card"><i class="fas fa-quote-left quote-icon"></i>
-                    <p class="testimonial-text">"Terapi süreci boyunca kendimi keşfetme yolculuğumda
-                        bana sağladıkları profesyonel destek ve akademik yaklaşım,
-                        hayata bakış açımı tamamen değiştirdi. Güven veren bir ortamda olduğumu her
-                        an hissettim."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-info">
-                            <h4>H. A.</h4><span>Bireysel Terapi Danışanı</span>
+            <div class="testimonials-grid">
+                <?php foreach ($testimonials as $testimonial): ?>
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p class="testimonial-text">"<?php echo htmlspecialchars($testimonial['comment']); ?>"</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4><?php echo htmlspecialchars($testimonial['name']); ?></h4>
+                                <span><?php echo htmlspecialchars($testimonial['source'] . ' / Danışan'); ?></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="testimonial-card"><i class="fas fa-quote-left quote-icon"></i>
-                    <p class="testimonial-text">"Eşimle yaşadığımız iletişim sorunlarını çözmemizde,
-                        uzman kadronun objektif ve yapıcı yaklaşımı çok etkili oldu. İlişkimizde
-                        yeni ve sağlıklı bir temel kurmamıza yardımcı oldular."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-info">
-                            <h4>M. & E. Ş.</h4><span>Aile & Çift Terapisi Danışanı</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card"><i class="fas fa-quote-left quote-icon"></i>
-                    <p class="testimonial-text">"Kızımızın gelişim sürecinde karşılaştığımız
-                        zorluklarda,
-                        ekibin çocuk dünyasına olan derin anlayışı ve ebeveyn olarak bize sundukları
-                        rehberlik paha biçilemezdi. Çok teşekkür ederiz."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-info">
-                            <h4>S. K.</h4><span>Ebeveyn / Danışan Yakını</span>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
