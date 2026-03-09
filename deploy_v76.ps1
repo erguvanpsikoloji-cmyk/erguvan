@@ -1,26 +1,34 @@
-$ftp_server = "94.73.147.96"
-$ftp_user = "erguvanpsikoloji.com"
-$ftp_pass = "Sercen.1903"
-$remote_path = "/httpdocs/"
-$local_path = "c:\Users\ceren\Desktop\erguvan son\"
+$ftp_host = "ftp://erguvanpsikoloji.com"
+$ftp_user = "erguvanpsi"
+$ftp_pass = "92Mirza1"
+$base_remotepath = "domains/erguvanpsikoloji.com/public_html"
 
-$files_to_upload = @("index.php", "config.php")
+function Invoke-FtpUpload {
+    param($localPath, $remotePath)
+    Write-Host "Uploading $localPath to $remotePath..."
+    $uri = New-Object System.Uri("$ftp_host/$remotePath")
+    $request = [System.Net.FtpWebRequest]::Create($uri)
+    $request.Credentials = New-Object System.Net.NetworkCredential($ftp_user, $ftp_pass)
+    $request.Method = [System.Net.WebRequestMethods+Ftp]::UploadFile
+    $request.UsePassive = $true
+    $request.KeepAlive = $false
 
-$webclient = New-Object System.Net.WebClient
-$webclient.Credentials = New-Object System.Net.NetworkCredential($ftp_user, $ftp_pass)
-
-foreach ($file in $files_to_upload) {
-    $local_file = Join-Path $local_path $file
-    $remote_file = "ftp://$ftp_server" + $remote_path + $file
-    Write-Host "Uploading ${file} to ${remote_file}..."
     try {
-        $webclient.UploadFile($remote_file, $local_file)
-        Write-Host "Successfully uploaded ${file}"
+        $fileContent = [System.IO.File]::ReadAllBytes($localPath)
+        $request.ContentLength = $fileContent.Length
+        $requestStream = $request.GetRequestStream()
+        $requestStream.Write($fileContent, 0, $fileContent.Length)
+        $requestStream.Close()
+        $response = $request.GetResponse()
+        $response.Close()
+        Write-Host "Success: $localPath" -ForegroundColor Green
     }
     catch {
-        $err = $_.Exception.Message
-        Write-Host "Failed to upload ${file}. Error: ${err}"
+        Write-Host "Failed: $localPath : $_" -ForegroundColor Red
     }
 }
 
-Write-Host "Deployment v76 complete!"
+Invoke-FtpUpload -localPath "c:\Users\ceren\Desktop\erguvan son\config.php" -remotePath "$base_remotepath/config.php"
+Invoke-FtpUpload -localPath "c:\Users\ceren\Desktop\erguvan son\index.php" -remotePath "$base_remotepath/index.php"
+
+Write-Host "v76 Deployment complete (Orijinal Danışan Yorumları)."

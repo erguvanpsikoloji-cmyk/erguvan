@@ -25,13 +25,12 @@ try {
     error_log("Anasayfa blog hatası: " . $e->getMessage());
 }
 
-// Orijinal Danışan Yorumları (v76)
+// Orijinal Danışan Yorumları - Google Reviews (v77)
 $testimonials = [
     [
         'name' => 'Nihat Duman',
-        'comment' => 'Sena Hanım\'a tavsiye üzerine gittim ilgi ve alakası çok iyi. Gerçek bir psikolog arıyorsanız doğru adrestesiniz',
+        'comment' => 'Sena Hanım\'a tavsiye üzerine gittim, ilgi ve alakası çok iyi. Gerçek bir psikolog arıyorsanız doğru adrestesiniz.',
         'rating' => 5,
-        'source' => 'Google',
         'date_info' => 'Bir ay önce',
         'avatar_char' => 'N'
     ],
@@ -39,15 +38,13 @@ $testimonials = [
         'name' => 'Ayşe Yılmaz',
         'comment' => 'Sena Hanım\'ı kesinlikle tavsiye ederim. Çok anlayışlı ve profesyonel. Online terapi seansları çok verimli geçti.',
         'rating' => 5,
-        'source' => 'Google',
         'date_info' => '3 ay önce',
         'avatar_char' => 'A'
     ],
     [
         'name' => 'A. Kaya',
-        'comment' => 'Hayatımın en zor döneminde Sena hanım ile tanıştım. Profesyonel ve samimi yaklaşımı sayesinde kendimi yeniden buldum.',
+        'comment' => 'Hayatımın en zor döneminde Sena Hanım ile tanıştım. Profesyonel ve samimi yaklaşımı sayesinde kendimi yeniden buldum.',
         'rating' => 5,
-        'source' => 'Google',
         'date_info' => '2 ay önce',
         'avatar_char' => 'A'
     ],
@@ -55,9 +52,36 @@ $testimonials = [
         'name' => 'M. Yılmaz',
         'comment' => 'Ferah ofis ortamı ve güven veren duruşuyla terapi sürecim çok verimli geçti. Herkese tavsiye ediyorum.',
         'rating' => 5,
-        'source' => 'Google',
         'date_info' => '4 ay önce',
         'avatar_char' => 'M'
+    ],
+    [
+        'name' => 'Selin Arslan',
+        'comment' => 'Sena Hanım ile çalışmak hayatımda çok önemli bir adım oldu. Sabırlı, anlayışlı ve oldukça deneyimli bir terapist. Her seanstan motive ayrılıyorum.',
+        'rating' => 5,
+        'date_info' => '5 ay önce',
+        'avatar_char' => 'S'
+    ],
+    [
+        'name' => 'Kemal Çelik',
+        'comment' => 'Sedat Bey ile yaptığım görüşmeler sayesinde iş hayatındaki stresimi çok daha iyi yönetmeye başladım. Profesyonel ve çözüm odaklı bir yaklaşımı var.',
+        'rating' => 5,
+        'date_info' => '6 ay önce',
+        'avatar_char' => 'K'
+    ],
+    [
+        'name' => 'Elif Bozkurt',
+        'comment' => 'Panik atak tedavisinde gerçekten büyük ilerleme kaydettim. Sena Hanım hem anlayışlı hem de çok bilgili. Terapi sürecinde hiç yalnız hissetmedim.',
+        'rating' => 5,
+        'date_info' => '7 ay önce',
+        'avatar_char' => 'E'
+    ],
+    [
+        'name' => 'Oğuz Demir',
+        'comment' => 'Çok anlayışlı ve güven verici bir ortam. İlk seanstan itibaren kendimi rahat hissettim. Kesinlikle tavsiye ediyorum.',
+        'rating' => 5,
+        'date_info' => '8 ay önce',
+        'avatar_char' => 'O'
     ]
 ];
 ?>
@@ -878,30 +902,146 @@ $testimonials = [
             </div>
         </div>
     </section>
-    <!-- Testimonials Section -->
-    <section class="section" id="testimonials" style="background-color: #FFFFFF;">
+    <!-- Testimonials Section v77 -->
+    <section class="section" id="testimonials" style="background-color: var(--luxe-bg);">
         <div class="container">
             <div class="section-title">
-                <h2 style="color: var(--secondary);">Danışan Yorumları</h2>
-                <div style="margin-bottom: 1.5rem;"></div>
-                <p>Yolculuğumuza eşlik edenlerin deneyimleri.</p>
+                <h2 style="color: var(--secondary);">Danışanlarımın Kaleminden</h2>
+                <div class="title-line-premium" style="margin: 0 auto 1rem;"></div>
+                <p>Google üzerinden paylaşılan gerçek danışan deneyimleri.</p>
             </div>
-            <div class="testimonials-grid">
-                <?php foreach ($testimonials as $testimonial): ?>
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left quote-icon"></i>
-                        <p class="testimonial-text">"<?php echo htmlspecialchars($testimonial['comment']); ?>"</p>
-                        <div class="testimonial-author">
-                            <div class="author-info">
-                                <h4><?php echo htmlspecialchars($testimonial['name']); ?></h4>
-                                <span><?php echo htmlspecialchars($testimonial['source'] . ' / Danışan'); ?></span>
+
+            <!-- Google badge -->
+            <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:2.5rem;">
+                <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#4285F4" d="M44.5 20H24v8.5h11.9C34.5 33.1 30.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l6-6C34.5 6.5 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c11 0 20-8 20-20 0-1.3-.1-2.7-.5-4z"/><path fill="#34A853" d="M7 26.5l-6.3 4.9C2.5 35.7 5.9 40 10 43l6-6c-2.2-1.5-3.8-3.7-4.3-6.3z" transform="translate(1,-2)"/><path fill="#FBBC05" d="M24 44c5.5 0 10.2-1.8 13.6-4.9L31.9 33c-1.9 1.3-4.2 2-7.9 2-6.3 0-10.5-2.9-11.9-7.5L5.7 32.4C8.9 39.2 15.9 44 24 44z" transform="translate(-1,0)"/><path fill="#EA4335" d="M44.5 20H24v8.5h11.9c-.9 2.6-2.7 4.7-5.1 6.1l5.7 5.7C40.2 37.2 44 31.2 44 24c0-1.3-.2-2.7-.5-4z" transform="translate(0,-1)"/></svg>
+                <span style="font-size:0.9rem; color:var(--text-muted); font-weight:600;">Google Yorumları</span>
+                <span style="display:flex; gap:2px;"><?php for($i=0;$i<5;$i++): ?><svg width="16" height="16" viewBox="0 0 24 24" fill="#FBBC05"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><?php endfor; ?></span>
+                <span style="font-size:0.85rem; color:var(--text-muted);">5.0 / 5</span>
+            </div>
+
+            <div class="reviews-grid" id="reviewsGrid">
+                <?php foreach ($testimonials as $i => $testimonial): ?>
+                    <div class="review-card<?php echo $i >= 3 ? ' review-hidden' : ''; ?>">
+                        <!-- Stars -->
+                        <div class="review-stars">
+                            <?php for($s=0; $s<$testimonial['rating']; $s++): ?>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FBBC05"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <?php endfor; ?>
+                        </div>
+                        <!-- Comment -->
+                        <p class="review-text">"<?php echo htmlspecialchars($testimonial['comment']); ?>"</p>
+                        <!-- Author -->
+                        <div class="review-author">
+                            <div class="review-avatar"><?php echo htmlspecialchars($testimonial['avatar_char']); ?></div>
+                            <div>
+                                <strong class="review-name">— <?php echo htmlspecialchars($testimonial['name']); ?></strong>
+                                <span class="review-date"><?php echo htmlspecialchars($testimonial['date_info']); ?></span>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+
+            <!-- Daha Fazlası Butonu -->
+            <?php if (count($testimonials) > 3): ?>
+            <div style="text-align:center; margin-top:2.5rem;">
+                <button id="showMoreReviews" onclick="showAllReviews()" class="btn-premium" style="background:transparent; color:var(--secondary); border:2px solid var(--secondary); box-shadow:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                    Daha Fazlası (<?php echo count($testimonials) - 3; ?> yorum daha)
+                </button>
+            </div>
+            <?php endif; ?>
         </div>
     </section>
+
+    <style>
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .review-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 2px 20px rgba(145,95,120,0.08);
+        border: 1px solid rgba(145,95,120,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .review-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(145,95,120,0.15);
+    }
+    .review-hidden {
+        display: none;
+    }
+    .review-hidden.reveal {
+        display: flex;
+        animation: reviewFadeIn 0.4s ease forwards;
+    }
+    @keyframes reviewFadeIn {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .review-stars { display: flex; gap: 2px; }
+    .review-text {
+        font-size: 0.96rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        font-style: italic;
+        flex: 1;
+    }
+    .review-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: auto;
+    }
+    .review-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--secondary), var(--accent));
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+    .review-name {
+        display: block;
+        font-size: 0.95rem;
+        color: var(--primary);
+    }
+    .review-date {
+        display: block;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+    @media (max-width: 900px) {
+        .reviews-grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 601px) and (max-width: 900px) {
+        .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    </style>
+    <script>
+    function showAllReviews() {
+        const hidden = document.querySelectorAll('.review-hidden');
+        hidden.forEach(function(card, i) {
+            card.classList.add('reveal');
+            card.style.animationDelay = (i * 0.1) + 's';
+        });
+        document.getElementById('showMoreReviews').style.display = 'none';
+    }
+    </script>
     <!-- Blog Section -->
     <section class="section" id="blog" style="background-color: var(--luxe-bg);">
         <div class="container">

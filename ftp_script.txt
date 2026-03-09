@@ -1,0 +1,8 @@
+open 94.73.147.96
+erguvanpsikoloji.com
+Sercen.1903
+binary
+cd httpdocs
+put index.php
+put config.php
+quit
