@@ -947,7 +947,7 @@ $testimonials = [
             <div style="text-align:center; margin-top:2.5rem;">
                 <button id="showMoreReviews" onclick="showAllReviews()" class="btn-premium" style="background:transparent; color:var(--secondary); border:2px solid var(--secondary); box-shadow:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-                    Daha Fazlası (<?php echo count($testimonials) - 3; ?> yorum daha)
+                    Daha Fazlası
                 </button>
             </div>
             <?php endif; ?>
