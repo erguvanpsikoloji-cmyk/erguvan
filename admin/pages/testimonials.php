@@ -28,6 +28,17 @@ if (isset($_GET['toggle'])) {
     exit;
 }
 
+// Toplu sıra güncelleme
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bulk_order'])) {
+    foreach ($_POST['order'] as $id => $order) {
+        $db->prepare("UPDATE testimonials SET display_order = ? WHERE id = ?")
+            ->execute([(int) $order, (int) $id]);
+    }
+    header("Location: " . admin_url('pages/testimonials.php?order_updated=1'));
+    exit;
+}
+
+
 // Yorumları çek
 try {
     $testimonials = $db->query("SELECT * FROM testimonials ORDER BY display_order ASC, created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
@@ -131,72 +142,77 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <?php if (isset($_GET['success'])): ?>
-    <div class="alert alert-success"
-        style="background:#d1fae5;color:#065f46;padding:12px 20px;border-radius:10px;margin-bottom:1rem;">✅ Yorum silindi.
-    </div>
+    <div style="background:#d1fae5;color:#065f46;padding:12px 20px;border-radius:10px;margin-bottom:1rem;">✅ Yorum silindi.</div>
 <?php endif; ?>
 <?php if (isset($_GET['added'])): ?>
-    <div class="alert alert-success"
-        style="background:#d1fae5;color:#065f46;padding:12px 20px;border-radius:10px;margin-bottom:1rem;">✅ Yorum eklendi.
-    </div>
+    <div style="background:#d1fae5;color:#065f46;padding:12px 20px;border-radius:10px;margin-bottom:1rem;">✅ Yorum eklendi.</div>
 <?php endif; ?>
 <?php if (isset($_GET['updated'])): ?>
-    <div class="alert alert-success"
-        style="background:#d1fae5;color:#065f46;padding:12px 20px;border-radius:10px;margin-bottom:1rem;">✅ Yorum
-        güncellendi.</div>
+    <div style="background:#d1fae5;color:#065f46;padding:12px 20px;border-radius:10px;margin-bottom:1rem;">✅ Yorum güncellendi.</div>
+<?php endif; ?>
+<?php if (isset($_GET['order_updated'])): ?>
+    <div style="background:#dbeafe;color:#1e40af;padding:12px 20px;border-radius:10px;margin-bottom:1rem;">🔢 Sıralama güncellendi.</div>
 <?php endif; ?>
 
 <?php if (empty($testimonials)): ?>
     <div style="text-align:center;padding:60px;background:#fff;border-radius:20px;border:2px dashed #e2e8f0;">
-        <p style="color:#64748b;font-size:1.1rem;">Henüz yorum yok. <a
-                href="<?php echo admin_url('pages/testimonial-add.php'); ?>" style="color:#db2777;">Yorum ekle →</a></p>
-        <p style="color:#94a3b8;font-size:0.85rem;margin-top:8px;">Yorumları ilk kez yüklemek için: <a
-                href="<?php echo url('setup_testimonials.php'); ?>" target="_blank"
-                style="color:#db2777;">setup_testimonials.php</a></p>
+        <p style="color:#64748b;font-size:1.1rem;">Henüz yorum yok. <a href="<?php echo admin_url('pages/testimonial-add.php'); ?>" style="color:#db2777;">Yorum ekle →</a></p>
     </div>
 <?php else: ?>
-    <div
-        style="background:#fff;border-radius:20px;overflow:hidden;border:1px solid #f1f5f9;box-shadow:0 2px 15px rgba(0,0,0,0.04);">
-        <table class="testimonial-table">
-            <thead>
-                <tr>
-                    <th>Ad Soyad</th>
-                    <th>Yorum</th>
-                    <th>Puan</th>
-                    <th>Kaynak</th>
-                    <th>Durum</th>
-                    <th>İşlemler</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($testimonials as $t): ?>
+    <form method="POST">
+        <?php echo csrfField(); ?>
+        <input type="hidden" name="bulk_order" value="1">
+
+        <div style="background:#fff;border-radius:20px;overflow:hidden;border:1px solid #f1f5f9;box-shadow:0 2px 15px rgba(0,0,0,0.04);">
+            <table class="testimonial-table">
+                <thead>
                     <tr>
-                        <td>
-                            <strong><?php echo htmlspecialchars($t['name']); ?></strong><br>
-                            <small style="color:#94a3b8;"><?php echo htmlspecialchars($t['date_info'] ?? ''); ?></small>
-                        </td>
-                        <td style="max-width:280px;color:#475569;">
-                            <?php echo htmlspecialchars(mb_strimwidth($t['comment'], 0, 90, '...')); ?></td>
-                        <td><span class="stars"><?php echo str_repeat('★', (int) $t['rating']); ?></span></td>
-                        <td style="color:#64748b;"><?php echo htmlspecialchars($t['source'] ?? 'Google'); ?></td>
-                        <td>
-                            <a href="?toggle=<?php echo $t['id']; ?>"
-                                class="status-badge <?php echo $t['is_active'] ? 'active' : 'inactive'; ?>">
-                                <?php echo $t['is_active'] ? 'Aktif' : 'Pasif'; ?>
-                            </a>
-                        </td>
-                        <td>
-                            <div class="action-btns">
-                                <a href="testimonial-edit.php?id=<?php echo $t['id']; ?>" class="btn-edit">Düzenle</a>
-                                <a href="?delete=<?php echo $t['id']; ?>" class="btn-delete"
-                                    onclick="return confirm('Emin misiniz?')">Sil</a>
-                            </div>
-                        </td>
+                        <th style="width:60px;">Sıra</th>
+                        <th>Ad Soyad</th>
+                        <th>Yorum</th>
+                        <th>Puan</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <?php foreach ($testimonials as $t): ?>
+                        <tr>
+                            <td>
+                                <input type="number" name="order[<?php echo $t['id']; ?>]"
+                                    value="<?php echo (int)($t['display_order'] ?? 0); ?>"
+                                    min="0" max="999"
+                                    style="width:60px;padding:6px 8px;border:2px solid #e2e8f0;border-radius:8px;text-align:center;font-weight:700;color:#db2777;">
+                            </td>
+                            <td>
+                                <strong><?php echo htmlspecialchars($t['name']); ?></strong><br>
+                                <small style="color:#94a3b8;"><?php echo htmlspecialchars($t['date_info'] ?? ''); ?></small>
+                            </td>
+                            <td style="max-width:250px;color:#475569;"><?php echo htmlspecialchars(mb_strimwidth($t['comment'], 0, 80, '...')); ?></td>
+                            <td><span class="stars"><?php echo str_repeat('★', (int)$t['rating']); ?></span></td>
+                            <td>
+                                <a href="?toggle=<?php echo $t['id']; ?>" class="status-badge <?php echo $t['is_active'] ? 'active' : 'inactive'; ?>">
+                                    <?php echo $t['is_active'] ? 'Aktif' : 'Pasif'; ?>
+                                </a>
+                            </td>
+                            <td>
+                                <div class="action-btns">
+                                    <a href="testimonial-edit.php?id=<?php echo $t['id']; ?>" class="btn-edit">Düzenle</a>
+                                    <a href="?delete=<?php echo $t['id']; ?>" class="btn-delete" onclick="return confirm('Emin misiniz?')">Sil</a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top:1.2rem;text-align:right;">
+            <button type="submit" style="background:#1e40af;color:#fff;padding:12px 28px;border:none;border-radius:12px;font-weight:700;font-size:0.95rem;cursor:pointer;">
+                🔢 Sıralamayı Kaydet
+            </button>
+        </div>
+    </form>
 <?php endif; ?>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
