@@ -25,65 +25,34 @@ try {
     error_log("Anasayfa blog hatası: " . $e->getMessage());
 }
 
-// Orijinal Danışan Yorumları - Google Reviews (v77)
-$testimonials = [
-    [
-        'name' => 'Nihat Duman',
-        'comment' => 'Sena Hanım\'a tavsiye üzerine gittim, ilgi ve alakası çok iyi. Gerçek bir psikolog arıyorsanız doğru adrestesiniz.',
-        'rating' => 5,
-        'date_info' => 'Bir ay önce',
-        'avatar_char' => 'N'
-    ],
-    [
-        'name' => 'Ayşe Yılmaz',
-        'comment' => 'Sena Hanım\'ı kesinlikle tavsiye ederim. Çok anlayışlı ve profesyonel. Online terapi seansları çok verimli geçti.',
-        'rating' => 5,
-        'date_info' => '3 ay önce',
-        'avatar_char' => 'A'
-    ],
-    [
-        'name' => 'A. Kaya',
-        'comment' => 'Hayatımın en zor döneminde Sena Hanım ile tanıştım. Profesyonel ve samimi yaklaşımı sayesinde kendimi yeniden buldum.',
-        'rating' => 5,
-        'date_info' => '2 ay önce',
-        'avatar_char' => 'A'
-    ],
-    [
-        'name' => 'M. Yılmaz',
-        'comment' => 'Ferah ofis ortamı ve güven veren duruşuyla terapi sürecim çok verimli geçti. Herkese tavsiye ediyorum.',
-        'rating' => 5,
-        'date_info' => '4 ay önce',
-        'avatar_char' => 'M'
-    ],
-    [
-        'name' => 'Selin Arslan',
-        'comment' => 'Sena Hanım ile çalışmak hayatımda çok önemli bir adım oldu. Sabırlı, anlayışlı ve oldukça deneyimli bir terapist. Her seanstan motive ayrılıyorum.',
-        'rating' => 5,
-        'date_info' => '5 ay önce',
-        'avatar_char' => 'S'
-    ],
-    [
-        'name' => 'Kemal Çelik',
-        'comment' => 'Sedat Bey ile yaptığım görüşmeler sayesinde iş hayatındaki stresimi çok daha iyi yönetmeye başladım. Profesyonel ve çözüm odaklı bir yaklaşımı var.',
-        'rating' => 5,
-        'date_info' => '6 ay önce',
-        'avatar_char' => 'K'
-    ],
-    [
-        'name' => 'Elif Bozkurt',
-        'comment' => 'Panik atak tedavisinde gerçekten büyük ilerleme kaydettim. Sena Hanım hem anlayışlı hem de çok bilgili. Terapi sürecinde hiç yalnız hissetmedim.',
-        'rating' => 5,
-        'date_info' => '7 ay önce',
-        'avatar_char' => 'E'
-    ],
-    [
-        'name' => 'Oğuz Demir',
-        'comment' => 'Çok anlayışlı ve güven verici bir ortam. İlk seanstan itibaren kendimi rahat hissettim. Kesinlikle tavsiye ediyorum.',
-        'rating' => 5,
-        'date_info' => '8 ay önce',
-        'avatar_char' => 'O'
-    ]
-];
+// Danışan Yorumları - Veritabanından veya fallback
+$testimonials = [];
+try {
+    $db = getDB();
+    if ($db) {
+        $rows = $db->query("SELECT * FROM testimonials WHERE is_active = 1 ORDER BY display_order ASC, created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($rows)) {
+            $testimonials = $rows;
+        }
+    }
+} catch (Exception $e) {
+    error_log("Testimonials DB hatası: " . $e->getMessage());
+}
+
+// Fallback: DB boşsa hardcoded listeden al
+if (empty($testimonials)) {
+    $testimonials = [
+        ['name'=>'Nihat Duman',  'comment'=>"Sena Hanım'a tavsiye üzerine gittim, ilgi ve alakası çok iyi. Gerçek bir psikolog arıyorsanız doğru adrestesiniz.", 'rating'=>5, 'date_info'=>'Bir ay önce',  'avatar_char'=>'N'],
+        ['name'=>'Ayşe Yılmaz',  'comment'=>"Sena Hanım'ı kesinlikle tavsiye ederim. Çok anlayışlı ve profesyonel. Online terapi seansları çok verimli geçti.",  'rating'=>5, 'date_info'=>'3 ay önce',   'avatar_char'=>'A'],
+        ['name'=>'A. Kaya',      'comment'=>"Hayatımın en zor döneminde Sena Hanım ile tanıştım. Profesyonel ve samimi yaklaşımı sayesinde kendimi yeniden buldum.", 'rating'=>5, 'date_info'=>'2 ay önce', 'avatar_char'=>'A'],
+        ['name'=>'M. Yılmaz',    'comment'=>"Ferah ofis ortamı ve güven veren duruşuyla terapi sürecim çok verimli geçti. Herkese tavsiye ediyorum.", 'rating'=>5, 'date_info'=>'4 ay önce',   'avatar_char'=>'M'],
+        ['name'=>'Selin Arslan', 'comment'=>"Sena Hanım ile çalışmak hayatımda çok önemli bir adım oldu. Sabırlı, anlayışlı ve oldukça deneyimli bir terapist. Her seanstan motive ayrılıyorum.", 'rating'=>5, 'date_info'=>'5 ay önce', 'avatar_char'=>'S'],
+        ['name'=>'Kemal Çelik',  'comment'=>"Sedat Bey ile yaptığım görüşmeler sayesinde iş hayatındaki stresimi çok daha iyi yönetmeye başladım. Profesyonel ve çözüm odaklı bir yaklaşımı var.", 'rating'=>5, 'date_info'=>'6 ay önce', 'avatar_char'=>'K'],
+        ['name'=>'Elif Bozkurt', 'comment'=>"Panik atak tedavisinde gerçekten büyük ilerleme kaydettim. Sena Hanım hem anlayışlı hem de çok bilgili. Terapi sürecinde hiç yalnız hissetmedim.", 'rating'=>5, 'date_info'=>'7 ay önce', 'avatar_char'=>'E'],
+        ['name'=>'Oğuz Demir',   'comment'=>"Çok anlayışlı ve güven verici bir ortam. İlk seanstan itibaren kendimi rahat hissettim. Kesinlikle tavsiye ediyorum.", 'rating'=>5, 'date_info'=>'8 ay önce', 'avatar_char'=>'O'],
+    ];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="tr">
