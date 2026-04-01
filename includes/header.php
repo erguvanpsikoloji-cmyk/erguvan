@@ -716,10 +716,6 @@ if (!empty($seo_data['og_description'])) {
             <a href="<?php echo url(); ?>" class="logo-group" aria-label="Erguvan Psikoloji Ana Sayfa">
                 <img src="<?php echo webp_url('assets/images/logo_erguvan_transparent.png'); ?>" 
                     alt="Erguvan Psikoloji" class="logo-image" style="height: 45px; width: auto;">
-                <div class="logo-text">
-                    <span class="logo-title">Erguvan Psikoloji</span>
-                    <span class="logo-subtitle">Uzman Klinik Psikolog Desteği</span>
-                </div>
             </a>
             <div class="nav-menu" id="navMenu">
                 <a href="<?php echo url(); ?>" class="nav-link <?php echo $page == 'home' ? 'active' : ''; ?>">Ana Sayfa</a>
