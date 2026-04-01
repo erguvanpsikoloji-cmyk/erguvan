@@ -285,7 +285,7 @@ if (!empty($seo_data['og_description'])) {
     <?php endif; ?>
 
     <!-- Preload Critical Assets - LCP Optimization -->
-    <link rel="preload" href="<?php echo asset_url('images/logo.webp'); ?>" as="image" fetchpriority="high">
+    <link rel="preload" href="<?php echo webp_url('assets/images/logo_erguvan_transparent.png'); ?>" as="image" fetchpriority="high">
     <?php if (isset($preload_image_mobile) && !empty($preload_image_mobile)): ?>
         <link rel="preload" as="image" href="<?php echo htmlspecialchars($preload_image_mobile); ?>"
             media="(max-width: 600px)" fetchpriority="high">
@@ -376,9 +376,11 @@ if (!empty($seo_data['og_description'])) {
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             z-index: 1000;
-            height: 90px;
+            height: 80px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             transition: var(--transition);
+            display: flex;
+            align-items: center;
         }
 
         .header.scrolled {
@@ -396,47 +398,54 @@ if (!empty($seo_data['og_description'])) {
 
         .logo {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
             text-decoration: none;
+            max-width: 200px;
+            overflow: hidden;
         }
 
         .logo-image {
-            height: 65px;
+            height: 35px;
             /* Between 55-70px */
             width: auto;
             object-fit: contain;
             transition: var(--transition);
+            margin-bottom: 2px;
         }
 
         .header.scrolled .logo-image {
-            height: 55px;
-        }
-
-        .logo-text-group {
-            display: flex;
-            flex-direction: column;
-            line-height: 1;
-            margin-left: 0.2rem;
+            height: 30px;
         }
 
         .logo-text {
-            font-size: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            margin-left: 0;
+        }
+
+        .logo-title {
+            font-size: 1.2rem;
             font-family: var(--font-heading);
             color: var(--primary);
             font-weight: 400;
             margin: 0;
             letter-spacing: -0.5px;
+            line-height: 1.2;
         }
 
         .logo-subtitle {
-            font-size: 0.75rem;
+            font-size: 12px;
             color: var(--primary);
             font-weight: 600;
             font-family: var(--font-body);
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
             opacity: 0.85;
-            margin-top: 2px;
+            margin-top: 0;
+            line-height: 1.2;
+            white-space: nowrap;
         }
 
         .nav-menu {
@@ -507,7 +516,7 @@ if (!empty($seo_data['og_description'])) {
             /* Modern */
             display: flex;
             align-items: center;
-            padding-top: 90px;
+            padding-top: 80px;
             background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
             overflow: hidden;
             box-sizing: border-box;
@@ -534,14 +543,36 @@ if (!empty($seo_data['og_description'])) {
             will-change: transform;
         }
 
+        .nav-toggle {
+            display: none !important;
+        }
+
         /* Mobile Responsive */
-        @media (max-width: 991px) {
+        @media (max-width: 1350px) and (min-width: 1151px) {
+            .logo-title {
+                font-size: 1.4rem;
+            }
+            .logo-subtitle {
+                font-size: 0.65rem;
+            }
+            .nav-menu {
+                gap: 1rem;
+            }
+            .nav-actions {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 1150px) {
             .nav-menu {
                 gap: 1.2rem;
             }
 
-            .logo-text {
-                font-size: 1.3rem;
+            .logo-title {
+                font-size: 1.4rem;
+            }
+            .logo-subtitle {
+                font-size: 0.65rem;
             }
         }
 
@@ -563,17 +594,17 @@ if (!empty($seo_data['og_description'])) {
                 margin-left: 0.5rem;
             }
 
-            .logo-text {
+            .logo-title {
                 font-size: 1.2rem;
             }
 
             .logo-subtitle {
-                font-size: 0.55rem;
+                font-size: 0.6rem;
                 letter-spacing: 0;
             }
 
             .nav-toggle {
-                display: flex;
+                display: flex !important;
             }
 
             .nav-menu {
@@ -681,35 +712,32 @@ if (!empty($seo_data['og_description'])) {
                 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <?php endif; ?>
     <header class="header" id="mainHeader">
-        <div class="container">
-            <nav class="nav">
-                <a href="<?php echo url(); ?>" class="logo" aria-label="Erguvan Psikoloji Ana Sayfa">
-                    <img src="<?php echo asset_url('images/logo_icon.png'); ?>" alt="Erguvan Psikoloji"
-                        class="logo-image" style="height: 60px; width: auto;">
-                    <div class="logo-text-group">
-                        <span class="logo-text">Erguvan Psikoloji</span>
-                        <span class="logo-subtitle">Uzman Klinik Psikolog Desteği</span>
-                    </div>
-                </a>
-                <div class="nav-menu" id="navMenu">
-                    <a href="<?php echo url(); ?>" class="nav-link <?php echo $page == 'home' ? 'active' : ''; ?>">Ana
-                        Sayfa</a>
-                    <a href="<?php echo url('#hizmetler'); ?>" class="nav-link">Hizmetlerimiz</a>
-                    <a href="<?php echo url('#hakkimizda'); ?>" class="nav-link">Hakkımızda</a>
-                    <a href="<?php echo url('#ekibimiz'); ?>" class="nav-link">Ekibimiz</a>
-                    <a href="<?php echo page_url('blog.php'); ?>"
-                        class="nav-link <?php echo $page == 'blog' ? 'active' : ''; ?>">Blog</a>
-                    <a href="<?php echo url('#iletisim'); ?>" class="nav-link">İletişim</a>
+        <div class="header-inner">
+            <a href="<?php echo url(); ?>" class="logo-group" aria-label="Erguvan Psikoloji Ana Sayfa">
+                <img src="<?php echo webp_url('assets/images/logo_erguvan_transparent.png'); ?>" 
+                    alt="Erguvan Psikoloji" class="logo-image" style="height: 45px; width: auto;">
+                <div class="logo-text">
+                    <span class="logo-title">Erguvan Psikoloji</span>
+                    <span class="logo-subtitle">Uzman Klinik Psikolog Desteği</span>
                 </div>
-                <div class="nav-actions">
-                    <a href="<?php echo url('#randevu'); ?>" class="btn-randevu">Randevu Al</a>
-                    <button class="nav-toggle" id="navToggle" aria-label="Menüyü aç/kapat" aria-expanded="false"
-                        aria-controls="navMenu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-            </nav>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="<?php echo url(); ?>" class="nav-link <?php echo $page == 'home' ? 'active' : ''; ?>">Ana Sayfa</a>
+                <a href="<?php echo url('#hizmetler'); ?>" class="nav-link">Hizmetlerimiz</a>
+                <a href="<?php echo url('#hakkimizda'); ?>" class="nav-link">Hakkımızda</a>
+                <a href="<?php echo url('#ekibimiz'); ?>" class="nav-link">Ekibimiz</a>
+                <a href="<?php echo page_url('blog.php'); ?>"
+                    class="nav-link <?php echo $page == 'blog' ? 'active' : ''; ?>">Blog</a>
+                <a href="<?php echo url('#iletisim'); ?>" class="nav-link">İletişim</a>
+            </div>
+            <div class="nav-actions">
+                <a href="<?php echo url('#randevu'); ?>" class="btn-randevu">Randevu Al</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Menüyü aç/kapat" aria-expanded="false"
+                    aria-controls="navMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </header>
